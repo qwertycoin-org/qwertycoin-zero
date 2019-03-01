@@ -182,7 +182,7 @@ QString CryptoNoteAdapter::getCurrencyTicker() const {
 }
 
 quint64 CryptoNoteAdapter::getMinimalFee() const {
-  if (m_nodeAdapter->getLastLocalBlockInfo().majorVersion < CryptoNote::BLOCK_MAJOR_VERSION_4) {
+  if (m_nodeAdapter->getLastLocalBlockInfo().majorVersion < CryptoNote::BLOCK_MAJOR_VERSION_6) {
     return m_currency.minimumFee();
   } else {
     return m_currency.roundUpMinFee(m_nodeAdapter->getMinimalFee(), 2);

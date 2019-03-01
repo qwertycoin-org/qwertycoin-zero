@@ -59,7 +59,7 @@ public:
         m_amountSpin = new QDoubleSpinBox(BalanceProofDialog);
         m_amountSpin->setObjectName(QStringLiteral("m_amountSpin"));
         m_amountSpin->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
-        m_amountSpin->setDecimals(12);
+        m_amountSpin->setDecimals(8);
         m_amountSpin->setMinimum(0);
         m_amountSpin->setMaximum(1e+15);
         m_amountSpin->setValue(0);

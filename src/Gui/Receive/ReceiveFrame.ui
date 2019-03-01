@@ -101,10 +101,10 @@
           <item>
            <widget class="QDoubleSpinBox" name="m_amountRequestSpinBox">
             <property name="decimals">
-             <number>12</number>
+             <number>8</number>
             </property>
             <property name="maximum">
-             <double>999999999.000000000000000</double>
+             <double>999999999.00000000</double>
             </property>
            </widget>
           </item>

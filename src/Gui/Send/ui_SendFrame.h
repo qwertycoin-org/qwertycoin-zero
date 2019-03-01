@@ -161,11 +161,11 @@ public:
         m_feeSpin->setEnabled(false);
         m_feeSpin->setButtonSymbols(QAbstractSpinBox::UpDownArrows);
         m_feeSpin->setSuffix(QStringLiteral("QWC"));
-        m_feeSpin->setDecimals(12);
-        m_feeSpin->setMinimum(0.0002);
+        m_feeSpin->setDecimals(8);
+        m_feeSpin->setMinimum(1);
         m_feeSpin->setMaximum(999);
-        m_feeSpin->setSingleStep(0.01);
-        m_feeSpin->setValue(0.01);
+        m_feeSpin->setSingleStep(0.1);
+        m_feeSpin->setValue(1);
 
         gridLayout_4->addWidget(m_feeSpin, 0, 1, 1, 1);
 
@@ -217,7 +217,7 @@ public:
         m_prioritySlider->setMinimum(1);
         m_prioritySlider->setMaximum(4);
         m_prioritySlider->setPageStep(1);
-        m_prioritySlider->setValue(2);
+        m_prioritySlider->setValue(1);
         m_prioritySlider->setOrientation(Qt::Horizontal);
 
         m_priorityGridLayout->addWidget(m_prioritySlider, 0, 0, 1, 1);
@@ -265,7 +265,7 @@ public:
         m_mixinSlider->setMaximumSize(QSize(16777215, 16777215));
         m_mixinSlider->setMaximum(19);
         m_mixinSlider->setPageStep(1);
-        m_mixinSlider->setValue(7);
+        m_mixinSlider->setValue(2);
         m_mixinSlider->setTracking(false);
         m_mixinSlider->setOrientation(Qt::Horizontal);
 

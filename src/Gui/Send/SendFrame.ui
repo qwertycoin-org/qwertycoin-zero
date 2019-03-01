@@ -213,7 +213,7 @@
       <item row="0" column="1">
        <widget class="QDoubleSpinBox" name="m_feeSpin">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="buttonSymbols">
          <enum>QAbstractSpinBox::UpDownArrows</enum>
@@ -222,19 +222,19 @@
          <string notr="true">QWC</string>
         </property>
         <property name="decimals">
-         <number>12</number>
+         <number>8</number>
         </property>
         <property name="minimum">
-         <double>0.000200000000000</double>
+         <double>1.00000000</double>
         </property>
         <property name="maximum">
-         <double>999.000000000000000</double>
+         <double>999.00000000</double>
         </property>
         <property name="singleStep">
-         <double>0.010000000000000</double>
+         <double>0.10000000</double>
         </property>
         <property name="value">
-         <double>0.010000000000000</double>
+         <double>1.00000000</double>
         </property>
        </widget>
       </item>

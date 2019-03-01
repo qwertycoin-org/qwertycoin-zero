@@ -121,7 +121,7 @@ public:
         m_donationChangeAmountSpin->setObjectName(QStringLiteral("m_donationChangeAmountSpin"));
         m_donationChangeAmountSpin->setDecimals(1);
         m_donationChangeAmountSpin->setMinimum(0.1);
-        m_donationChangeAmountSpin->setMaximum(10);
+        m_donationChangeAmountSpin->setMaximum(1000);
         m_donationChangeAmountSpin->setSingleStep(0.1);
 
         gridLayout_2->addWidget(m_donationChangeAmountSpin, 5, 1, 1, 1);

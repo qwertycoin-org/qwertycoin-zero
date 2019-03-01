@@ -162,7 +162,7 @@ public:
 "}"));
         m_sendAmountSpin->setButtonSymbols(QAbstractSpinBox::UpDownArrows);
         m_sendAmountSpin->setSuffix(QStringLiteral("QWC"));
-        m_sendAmountSpin->setDecimals(12);
+        m_sendAmountSpin->setDecimals(8);
         m_sendAmountSpin->setMaximum(1e+12);
 
         gridLayout_2->addWidget(m_sendAmountSpin, 1, 0, 1, 2);

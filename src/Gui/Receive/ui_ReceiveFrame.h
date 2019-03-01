@@ -111,7 +111,7 @@ public:
         horizontalLayout_6->setContentsMargins(-1, 0, -1, -1);
         m_amountRequestSpinBox = new QDoubleSpinBox(m_createRequestFrame);
         m_amountRequestSpinBox->setObjectName(QStringLiteral("m_amountRequestSpinBox"));
-        m_amountRequestSpinBox->setDecimals(12);
+        m_amountRequestSpinBox->setDecimals(8);
         m_amountRequestSpinBox->setMaximum(1e+09);
 
         horizontalLayout_6->addWidget(m_amountRequestSpinBox);
