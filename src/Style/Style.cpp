@@ -77,7 +77,7 @@ QString Style::backgroundButtonColorGrayHover() const {
 }
 
 QString Style::backgroundColorBlueNormal() const {
-  return "#4197d1";
+  return "#28276f";
 }
 
 QString Style::backgroundColorBlueHover() const {
@@ -85,11 +85,11 @@ QString Style::backgroundColorBlueHover() const {
 }
 
 QString Style::backgroundColorBluePressed() const {
-  return "#4197d1";
+  return "#28276f";
 }
 
 QString Style::backgroundColorBlueDisabled() const {
-  return "#7f4197d1";
+  return "#4197d1";
 }
 
 QString Style::backgroundColorGrayNormal() const {
@@ -129,7 +129,7 @@ QString Style::selectionColor() const {
 }
 
 QString Style::glassColor() const {
-  return "#eaffffff";
+  return "#eaffff";
 }
 
 QIcon Style::getSystemTrayIcon() const {

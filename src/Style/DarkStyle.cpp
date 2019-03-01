@@ -49,15 +49,15 @@ QString DarkStyle::balanceFontColor() const {
 }
 
 QString DarkStyle::toolButtonBackgroundColorNormal() const {
-  return "#1D3254";
+  return "#28276f";
 }
 
 QString DarkStyle::toolButtonBackgroundColorHover() const {
-  return "#6582AA";
+  return "#4a48b6";
 }
 
 QString DarkStyle::toolButtonBackgroundColorPressed() const {
-  return "#425A80";
+  return "#4a48b6";
 }
 
 QString DarkStyle::toolButtonFontColorNormal() const {
@@ -65,7 +65,7 @@ QString DarkStyle::toolButtonFontColorNormal() const {
 }
 
 QString DarkStyle::toolButtonFontColorDisabled() const {
-  return "#b2ffffff";
+  return "#b2ffff";
 }
 
 QString DarkStyle::toolBarBorderColor() const {

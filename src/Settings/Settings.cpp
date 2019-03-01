@@ -152,7 +152,7 @@ const Style& Settings::getStyle(quintptr _styleIndex) const {
 
 const Style& Settings::getCurrentStyle() const {
   QReadLocker lock(&m_lock);
-  QString theme = m_settings.contains(OPTION_WALLET_THEME) ? m_settings.value(OPTION_WALLET_THEME).toString() : "light";
+  QString theme = m_settings.contains(OPTION_WALLET_THEME) ? m_settings.value(OPTION_WALLET_THEME).toString() : "dark";
   return *m_styles[theme];
 }
 
