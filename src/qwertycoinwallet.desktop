@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Qwertycoin Zero Wallet
+Comment=Qwertycoin wallet
+Exec=qwertycoinwallet %U
+Terminal=false
+Type=Application
+Icon=Qwertycoin
+MimeType=x-scheme-handler/karbowanec;
+Categories=Office;Finance;
+Version=1.0.7
