@@ -866,7 +866,7 @@ void Settings::removeObserver(ISettingsObserver* _settingsObserver) {
 void Settings::setUrlHandler() {
   QWriteLocker lock(&m_lock);
   QSettings protocolSettings("HKEY_CURRENT_USER\\Software\\Classes\\Qwertycoin", QSettings::NativeFormat);
-  protocolSettings.setValue(".", "URL:karbowanec");
+  protocolSettings.setValue(".", "URL:qwertycoin");
   protocolSettings.setValue("URL Protocol", "");
   QSettings iconSettings("HKEY_CURRENT_USER\\Software\\Classes\\Qwertycoin\\DefaultIcon", QSettings::NativeFormat);
   iconSettings.setValue(".", QDir::toNativeSeparators(QCoreApplication::applicationFilePath()));

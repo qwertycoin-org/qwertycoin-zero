@@ -81,7 +81,7 @@
       <item alignment="Qt::AlignTop">
        <widget class="WalletGui::WalletSmallGrayTextLabel" name="m_autoHelperLabel">
         <property name="text">
-         <string>Wallet will connect to local Karbo daemon process on default port 8197. In case of no local daemon running it will use a random remote node.</string>
+         <string>Wallet will connect to local Qwertycoin daemon process on default port 8197. In case of no local daemon running it will use a random remote node.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -205,7 +205,7 @@
       <item alignment="Qt::AlignTop">
        <widget class="WalletGui::WalletSmallGrayTextLabel" name="m_localHelperLabel">
         <property name="text">
-         <string>Wallet will connect to local Karbo daemon process. Please specify daemon's port.</string>
+         <string>Wallet will connect to local Qwertycoin daemon process. Please specify daemon's port.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -395,7 +395,7 @@
       <item alignment="Qt::AlignTop">
        <widget class="WalletGui::WalletSmallGrayTextLabel" name="m_remoteHelperLabel">
         <property name="text">
-         <string>Wallet will connect to Karbo node running on another PC in the local or global network. Please specify IP address or domain name and the port.</string>
+         <string>Wallet will connect to Qwertycoin node running on another PC in the local or global network. Please specify IP address or domain name and the port.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

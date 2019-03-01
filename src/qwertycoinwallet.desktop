@@ -6,6 +6,6 @@ Exec=qwertycoinwallet %U
 Terminal=false
 Type=Application
 Icon=Qwertycoin
-MimeType=x-scheme-handler/karbowanec;
+MimeType=x-scheme-handler/qwertycoin;
 Categories=Office;Finance;
 Version=1.0.7

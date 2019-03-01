@@ -58,7 +58,7 @@ namespace WalletGui {
 
 namespace {
 
-const char URI_SCHEME_NAME[] = "karbowanec";
+const char URI_SCHEME_NAME[] = "qwertycoin";
 const QRegularExpression LOG_SPLASH_REG_EXP("\\[Core\\] Imported block with index");
 
 quint16 findPort() {
@@ -256,9 +256,9 @@ bool WalletApplication::initCryptoNoteAdapter() {
       okButton->setText(QObject::tr("Ok"));
       dlg.addButton(okButton, QMessageBox::AcceptRole);
       dlg.setText(QObject::tr("The database is currently used by another application or service.\n"
-      "If you have karbowanecd with non-default RPC port, you should terminate it and relaunch wallet\n"
+      "If you have qwertycoind with non-default RPC port, you should terminate it and relaunch wallet\n"
       "or\n"
-      "Set the Local deamon required port in KarboWallet Menu/Preferences/Connection settings."));
+      "Set the Local deamon required port in QwertyWallet Menu/Preferences/Connection settings."));
       dlg.exec();
       return false;
     }

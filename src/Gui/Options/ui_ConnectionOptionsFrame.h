@@ -263,15 +263,15 @@ public:
     {
         ConnectionOptionsFrame->setWindowTitle(QApplication::translate("ConnectionOptionsFrame", "Frame", nullptr));
         m_autoRadio->setText(QApplication::translate("ConnectionOptionsFrame", "Auto selection", nullptr));
-        m_autoHelperLabel->setText(QApplication::translate("ConnectionOptionsFrame", "Wallet will connect to local Karbo daemon process on default port 8197. In case of no local daemon running it will use a random remote node.", nullptr));
+        m_autoHelperLabel->setText(QApplication::translate("ConnectionOptionsFrame", "Wallet will connect to local Qwertycoin daemon process on default port 8197. In case of no local daemon running it will use a random remote node.", nullptr));
         m_localRadio->setText(QApplication::translate("ConnectionOptionsFrame", "Local daemon", nullptr));
         label->setText(QApplication::translate("ConnectionOptionsFrame", "Port:", nullptr));
-        m_localHelperLabel->setText(QApplication::translate("ConnectionOptionsFrame", "Wallet will connect to local Karbo daemon process. Please specify daemon's port.", nullptr));
+        m_localHelperLabel->setText(QApplication::translate("ConnectionOptionsFrame", "Wallet will connect to local Qwertycoin daemon process. Please specify daemon's port.", nullptr));
         m_remoteRadio->setText(QApplication::translate("ConnectionOptionsFrame", "Remote daemon", nullptr));
         label_2->setText(QApplication::translate("ConnectionOptionsFrame", "Host:", nullptr));
         addNodeButton->setText(QApplication::translate("ConnectionOptionsFrame", "Add", nullptr));
         removeNodeButton->setText(QApplication::translate("ConnectionOptionsFrame", "Remove", nullptr));
-        m_remoteHelperLabel->setText(QApplication::translate("ConnectionOptionsFrame", "Wallet will connect to Karbo node running on another PC in the local or global network. Please specify IP address or domain name and the port.", nullptr));
+        m_remoteHelperLabel->setText(QApplication::translate("ConnectionOptionsFrame", "Wallet will connect to Qwertycoin node running on another PC in the local or global network. Please specify IP address or domain name and the port.", nullptr));
         label_4->setText(QApplication::translate("ConnectionOptionsFrame", "Wallet sends 0.25% fee from each transaction to the remote node it is connected to, but no more than 1 QWC.", nullptr));
     } // retranslateUi
 
