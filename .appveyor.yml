@@ -7,7 +7,7 @@ environment:
 
 clone_script:
     - cmd: git clone -q --recursive --branch=master https://github.com/qwertycoin-org/qwertycoin-zero.git
-    - cmd: cd qwertycoin-gui
+    - cmd: cd qwertycoin-zero
     - cmd: git clone -q --recursive --branch=master https://github.com/qwertycoin-org/qwertycoin.git cryptonote
     - cmd: dir
 
