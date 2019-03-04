@@ -15,7 +15,19 @@ Comes with config containing the list of remote nodes.
 
 It can import wallet files from [classic Qwertycoin wallet](https://github.com/qwertycoin-org/qwertycoin-gui) but it will take several minutes to refresh, and new wallet file will be incompatible with classic wallet.
 
+### Installing
+
+We offer binary images of the latest releases here: https://releases.qwertycoin.org
+
+If you would like to compile yourself, read on.
+
 ### How To Compile
+
+##### Prerequisites
+
+- You will need the following packages: boost (1.64 or higher), QT Library (5.9.0 orhigher) cmake (3.10 or higher), git, gcc (4.9 or higher), g++ (4.9 or higher), make, and python. Most of these should already be installed on your system.
+- For example on ubuntu: `sudo apt-get install build-essential python-dev gcc g++ git cmake libboost-all-dev qtbase5-dev`
+- After this you can compile your Qwertycoin
 
 
 **1. Clone wallet sources**
