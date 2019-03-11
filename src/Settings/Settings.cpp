@@ -1,5 +1,6 @@
 // Copyright (c) 2015-2017, The Bytecoin developers
 // Copyright (c) 2017-2018, The Karbo developers
+// Copyright (c) 2019, The Qwertycoin developers
 //
 // This file is part of Qwertycoin.
 //
@@ -63,7 +64,7 @@ const char OPTION_PRIVACY_NEWS_ENABLED[] = "newsEnabled";
 
 const char DEFAULT_WALLET_FILE_NAME[] = "qwertycoin.wallet";
 const quint64 DEFAULT_OPTIMIZATION_PERIOD = 1000 * 60 * 30; // 30 minutes
-const quint64 DEFAULT_OPTIMIZATION_THRESHOLD = 10000000000000;
+const quint64 DEFAULT_OPTIMIZATION_THRESHOLD = 100000000000000;
 const quint64 DEFAULT_OPTIMIZATION_MIXIN = 2;
 
 }
@@ -616,7 +617,7 @@ void Settings::setStartOnLoginEnabled(bool _enable) {
     if (_enable) {
       autorunFile.write("[Desktop Entry]\n");
       autorunFile.write("Type=Application\n");
-      autorunFile.write("Name=Karbo Wallet\n");
+      autorunFile.write("Name=Qwertycoin Wallet\n");
       autorunFile.write(QString("Exec=%1 --minimized\n").arg(QCoreApplication::applicationFilePath()).toLocal8Bit());
       autorunFile.write("Terminal=false\n");
       autorunFile.write("Hidden=false\n");

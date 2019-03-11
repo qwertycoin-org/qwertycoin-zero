@@ -1,5 +1,6 @@
 // Copyright (c) 2015-2017, The Bytecoin developers
 // Copyright (c) 2017-2018, The Karbo developers
+// Copyright (c) 2019, The Qwertycoin developers
 //
 // This file is part of Qwertycoin.
 //
