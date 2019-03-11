@@ -16,16 +16,18 @@ set(VERSION "${CN_REVISION}")
 configure_file("cryptonote/src/version.h.in" "version.h")
 configure_file("src/CryptoNoteWalletConfig.h.in" "CryptoNoteWalletConfig.h")
 
-add_definitions (-DGIT_REVISION="${GIT_REVISION}")
-add_definitions (-DCN_VERSION="${CN_VERSION}")
-add_definitions (-DCN_REVISION="${CN_REVISION}")
+add_definitions(-DGIT_REVISION="${GIT_REVISION}")
+add_definitions(-DCN_VERSION="${CN_VERSION}")
+add_definitions(-DCN_REVISION="${CN_REVISION}")
+add_definitions(-DUPNP_VERSION_STRING="2.1")
+add_definitions(-DMINIUPNP_STATICLIB)
 
 set(CRYPTONOTE_LIB cryptonote)
 
 include_directories(${CMAKE_BINARY_DIR}
   src
   include
-  cryptonote/external
+  external
   cryptonote/include
   cryptonote/src
   libqrencode
@@ -54,16 +56,17 @@ link_directories(${Boost_LIBRARY_DIRS})
 set(CMAKE_AUTOMOC ON)
 
 file(GLOB_RECURSE CRYPTONOTE_SOURCES
-  cryptonote/external/miniupnpc/connecthostport.c
-  cryptonote/external/miniupnpc/igd_desc_parse.c
-  cryptonote/external/miniupnpc/minisoap.c
-  cryptonote/external/miniupnpc/miniupnpc.c
-  cryptonote/external/miniupnpc/miniwget.c
-  cryptonote/external/miniupnpc/minixml.c
-  cryptonote/external/miniupnpc/portlistingparse.c
-  cryptonote/external/miniupnpc/receivedata.c
-  cryptonote/external/miniupnpc/upnpcommands.c
-  cryptonote/external/miniupnpc/upnpreplyparse.c
+  external/miniupnpc/connecthostport.c
+  external/miniupnpc/igd_desc_parse.c
+  external/miniupnpc/minisoap.c
+  external/miniupnpc/minissdpc.c
+  external/miniupnpc/miniupnpc.c
+  external/miniupnpc/miniwget.c
+  external/miniupnpc/minixml.c
+  external/miniupnpc/portlistingparse.c
+  external/miniupnpc/receivedata.c
+  external/miniupnpc/upnpcommands.c
+  external/miniupnpc/upnpreplyparse.c
   cryptonote/src/BlockchainExplorer/BlockchainExplorer.cpp
   cryptonote/src/BlockchainExplorer/BlockchainExplorerErrors.cpp
   cryptonote/src/Common/Base58.cpp
@@ -184,13 +187,7 @@ if (WIN32)
 
 elseif (UNIX)
   
-  add_custom_target(
-     rocksdb
-     COMMAND make static_lib -Wno-undef -Wno-unused-result -Wno-unused-value
-     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/cryptonote/external/rocksdb
-  )
-  
-  set(CRYPTONOTE_SOURCES ${CRYPTONOTE_SOURCES} cryptonote/external/miniupnpc/minissdpc.c)
+  set(CRYPTONOTE_SOURCES ${CRYPTONOTE_SOURCES} external/miniupnpc/minissdpc.c)
 
   if (APPLE)
     enable_language(ASM)
@@ -235,7 +232,7 @@ set(CRYPTONOTE_SOURCES ${CRYPTONOTE_SOURCES} ${PLATFORM_SOURCES} ${CRYPTONOTE_PL
 
 if(MSVC)
 #else(MSVC)
-#  add_subdirectory(cryptonote/external)
+#  add_subdirectory(external)
 endif(MSVC)
 
 add_library(${CRYPTONOTE_LIB} STATIC ${CRYPTONOTE_SOURCES})
