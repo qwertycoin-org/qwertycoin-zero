@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include <QStyle>
 #include <QFrame>
 #include <QScrollArea>
 
@@ -121,5 +122,5 @@ private:
 Q_SIGNALS:
   void showTransactionsFrameSignal();
 };
-  
+
 }

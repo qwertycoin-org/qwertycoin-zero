@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include <QStyle>
 #include <QFrame>
 
 #include "Application/IWalletUiItem.h"
