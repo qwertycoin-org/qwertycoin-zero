@@ -1,265 +1,85 @@
-cmake_minimum_required(VERSION 2.8.6)
-include(CryptoNoteWallet.cmake)
-include(QREncode.cmake)
+cmake_minimum_required(VERSION 3.10)
 
-project(${CN_PROJECT_NAME})
-
-execute_process(COMMAND git log -1 --pretty=format:%h
-WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-OUTPUT_VARIABLE GIT_REVISION)
-
-execute_process(COMMAND git log -1 --pretty=format:%h
-WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/cryptonote/"
-OUTPUT_VARIABLE CN_REVISION)
-
-set(VERSION "${CN_REVISION}")
-configure_file("cryptonote/src/version.h.in" "version.h")
-configure_file("src/CryptoNoteWalletConfig.h.in" "CryptoNoteWalletConfig.h")
-
-add_definitions(-DGIT_REVISION="${GIT_REVISION}")
-add_definitions(-DCN_VERSION="${CN_VERSION}")
-add_definitions(-DCN_REVISION="${CN_REVISION}")
-add_definitions(-DUPNP_VERSION_STRING="2.1")
-add_definitions(-DMINIUPNP_STATICLIB)
-
-set(CRYPTONOTE_LIB cryptonote)
-
-include_directories(${CMAKE_BINARY_DIR}
-  src
-  include
-  external
-  cryptonote/include
-  cryptonote/src
-  libqrencode
-)
-
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Network REQUIRED)
-find_package(Qt5DBus REQUIRED)
-
-set(Boost_USE_STATIC_LIBS ON)
-if(WIN32)
-  set(Boost_USE_STATIC_RUNTIME OFF)
-else(WIN32)
-  set(Boost_USE_STATIC_RUNTIME ON)
-endif(WIN32)
-
-find_package(Boost 1.57 REQUIRED COMPONENTS date_time filesystem program_options regex serialization system thread chrono)
-if ((${Boost_MAJOR_VERSION} EQUAL 1) AND (${Boost_MINOR_VERSION} EQUAL 54))
-  message(SEND_ERROR "Boost version 1.57 is unsupported, more details are available here http://goo.gl/RrCFmA")
-endif ()
-
-include_directories(${Boost_INCLUDE_DIRS})
-link_directories(${Boost_LIBRARY_DIRS})
-
-set(CMAKE_AUTOMOC ON)
-
-file(GLOB_RECURSE CRYPTONOTE_SOURCES
-  external/miniupnpc/connecthostport.c
-  external/miniupnpc/igd_desc_parse.c
-  external/miniupnpc/minisoap.c
-  external/miniupnpc/minissdpc.c
-  external/miniupnpc/miniupnpc.c
-  external/miniupnpc/miniwget.c
-  external/miniupnpc/minixml.c
-  external/miniupnpc/portlistingparse.c
-  external/miniupnpc/receivedata.c
-  external/miniupnpc/upnpcommands.c
-  external/miniupnpc/upnpreplyparse.c
-  cryptonote/src/BlockchainExplorer/BlockchainExplorer.cpp
-  cryptonote/src/BlockchainExplorer/BlockchainExplorerErrors.cpp
-  cryptonote/src/Common/Base58.cpp
-  cryptonote/src/Common/CommandLine.cpp
-  cryptonote/src/Common/Util.cpp
-  cryptonote/src/Common/StringTools.cpp
-  cryptonote/src/Common/JsonValue.cpp
-  cryptonote/src/Common/ConsoleTools.cpp
-  cryptonote/src/Common/MemoryInputStream.cpp
-  cryptonote/src/Common/PathTools.cpp
-  cryptonote/src/Common/StdInputStream.cpp
-  cryptonote/src/Common/StdOutputStream.cpp
-  cryptonote/src/Common/StreamTools.cpp
-  cryptonote/src/Common/StringOutputStream.cpp
-  cryptonote/src/Common/StringView.cpp
-  cryptonote/src/Common/VectorOutputStream.cpp
-  cryptonote/src/Common/ScopeExit.cpp
-  cryptonote/src/ConnectivityTool/ConnectivityTool.cpp
-  cryptonote/src/crypto/blake256.c
-  cryptonote/src/crypto/chacha8.c
-  cryptonote/src/crypto/crypto-ops-data.c
-  cryptonote/src/crypto/crypto-ops.c
-  cryptonote/src/crypto/crypto.cpp
-  cryptonote/src/crypto/groestl.c
-  cryptonote/src/crypto/hash-extra-blake.c
-  cryptonote/src/crypto/hash-extra-groestl.c
-  cryptonote/src/crypto/hash-extra-jh.c
-  cryptonote/src/crypto/hash-extra-skein.c
-  cryptonote/src/crypto/hash.c
-  cryptonote/src/crypto/jh.c
-  cryptonote/src/crypto/keccak.c
-  cryptonote/src/crypto/oaes_lib.c
-  cryptonote/src/crypto/random.c
-  cryptonote/src/crypto/skein.c
-  cryptonote/src/crypto/slow-hash.c
-  cryptonote/src/crypto/slow-hash.cpp
-  cryptonote/src/crypto/tree-hash.c
-  cryptonote/src/CryptoNoteCore/*.cpp
-  cryptonote/src/CryptoNoteProtocol/*.cpp
-  cryptonote/src/Daemon/*.cpp
-  cryptonote/src/HTTP/*.cpp
-  cryptonote/src/InProcessNode/InProcessNode.cpp
-  cryptonote/src/InProcessNode/InProcessNodeErrors.cpp
-  cryptonote/src/Logging/*.cpp
-  cryptonote/src/NodeRpcProxy/NodeErrors.cpp
-  cryptonote/src/NodeRpcProxy/NodeRpcProxy.cpp
-  cryptonote/src/P2p/*.cpp
-  cryptonote/src/Rpc/*.cpp
-  cryptonote/src/Serialization/*.cpp
-  cryptonote/src/Transfers/BlockchainSynchronizer.cpp
-  cryptonote/src/Transfers/SynchronizationState.cpp
-  cryptonote/src/Transfers/TransfersConsumer.cpp
-  cryptonote/src/Transfers/TransfersContainer.cpp
-  cryptonote/src/Transfers/TransfersSubscription.cpp
-  cryptonote/src/Transfers/TransfersSynchronizer.cpp
-  cryptonote/src/Wallet/*.cpp
-  cryptonote/src/WalletLegacy/KeysStorage.cpp
-  cryptonote/src/WalletLegacy/WalletLegacy.cpp
-  cryptonote/src/WalletLegacy/WalletHelper.cpp
-  cryptonote/src/WalletLegacy/WalletLegacySerializer.cpp
-  cryptonote/src/WalletLegacy/WalletLegacySerialization.cpp
-  cryptonote/src/WalletLegacy/WalletTransactionSender.cpp
-  cryptonote/src/WalletLegacy/WalletUnconfirmedTransactions.cpp
-  cryptonote/src/WalletLegacy/WalletUserTransactionsCache.cpp
-  cryptonote/src/System/ContextGroup.cpp
-  cryptonote/src/System/Event.cpp
-  cryptonote/src/System/EventLock.cpp
-  cryptonote/src/System/InterruptedException.cpp
-  cryptonote/src/System/Ipv4Address.cpp
-  cryptonote/src/System/TcpStream.cpp
-  cryptonote/src/JsonRpcServer/*.cpp
-  cryptonote/src/PaymentGate/*.cpp
-  cryptonote/src/PaymentGateService/*.cpp
-)
-
-file(GLOB_RECURSE Mnemonics cryptonote/src/mnemonics/*)
-
-file(GLOB_RECURSE SOURCES src/*.cpp)
-file(GLOB_RECURSE HEADERS src/*.h)
-file(GLOB_RECURSE FORMS src/gui/ui/*.ui)
-
-if(MSVC)
-  include_directories(Platform/Windows)
-  set(SOURCES ${SOURCES} ${CMAKE_SOURCE_DIR}/Platform/Windows/ApplicationEventHandler.cpp)
-elseif(APPLE)
-  include_directories(Platform/OSX)
-  include_directories(Platform/Posix)
-  set(SOURCES ${SOURCES} ${CMAKE_SOURCE_DIR}/Platform/OSX/ApplicationEventHandler.h ${CMAKE_SOURCE_DIR}/Platform/OSX/ApplicationEventHandler.mm ${CMAKE_SOURCE_DIR}/Platform/OSX/INotificationMonitorObserver.h ${CMAKE_SOURCE_DIR}/Platform/OSX/NotificationMonitor.h ${CMAKE_SOURCE_DIR}/Platform/OSX/NotificationMonitor.mm ${CMAKE_SOURCE_DIR}/Platform/OSX/WalletApplication.mm )
-  set(SOURCES ${SOURCES} ${CMAKE_SOURCE_DIR}/Platform/Posix/System/MemoryMappedFile.cpp)
-else()
-  include_directories(Platform/Linux)
-  include_directories(Platform/Posix)
-  set(SOURCES ${SOURCES} ${CMAKE_SOURCE_DIR}/Platform/Linux/ApplicationEventHandler.cpp)
-  set(SOURCES ${SOURCES} ${CMAKE_SOURCE_DIR}/Platform/Posix/System/MemoryMappedFile.cpp)
+if(POLICY CMP0074)
+    # Allow find_package() to use <PackageName>_ROOT variables.
+    # This policy was introduced in CMake version 3.12.
+    cmake_policy(SET CMP0074 NEW)
 endif()
 
+list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_LIST_DIR}/cmake")
+list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_LIST_DIR}/cmake/find")
 
-set(QRC src/resources.qrc)
+# Configure project build type.
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Supported build types" FORCE)
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+message(STATUS "CMake build type: ${CMAKE_BUILD_TYPE}")
 
-qt5_wrap_ui(UIS ${FORMS})
-qt5_add_resources(RCC ${QRC})
+# Configure Hunter (CMake driven cross-platform package manager for C/C++).
+# WARNING: Must be included before project(...) function call!
+set(HUNTER_CONFIGURATION_TYPES Release CACHE STRING "Hunter configuration types")
+set(HUNTER_JOBS_NUMBER 4 CACHE STRING "Hunter jobs number")
+include(hunter/HunterGate)
+HunterGate(
+    URL "https://github.com/ruslo/hunter/archive/v0.23.122.tar.gz"
+    SHA1 "d8c252862a9900a703167ba703bfb1b17977948f"
+    FILEPATH "${CMAKE_CURRENT_LIST_DIR}/cmake/hunter/HunterConfig.cmake"
+)
 
-if (WIN32)
-  if (NOT MSVC)
-    message(FATAL_ERROR "Only MSVC is supported on this platform")
-  endif ()
-  
-  set(STATIC ${MSVC} CACHE BOOL "Link libraries statically")
+# Read git revision.
+find_package(Git)
+message(STATUS "Found Git: ${GIT_FOUND}")
+if(GIT_FOUND)
+    execute_process(
+        COMMAND "${GIT_EXECUTABLE}" rev-parse --short HEAD
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+        RESULT_VARIABLE PROJECT_GIT_RESULT
+        OUTPUT_VARIABLE PROJECT_GIT_COMMIT_ID
+        ERROR_VARIABLE PROJECT_GIT_ERROR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_STRIP_TRAILING_WHITESPACE)
+    if(NOT PROJECT_GIT_RESULT EQUAL 0)
+        set(PROJECT_GIT_COMMIT_ID "unknown")
+        message(WARNING "Failed to execute Git: ${PROJECT_GIT_ERROR}")
+    else()
+        message(STATUS "Git commit ID: ${PROJECT_GIT_COMMIT_ID}")
+    endif()
+else()
+    set(PROJECT_GIT_COMMIT_ID "unknown")
+    message(WARNING "Git not found")
+endif()
 
-  add_definitions(/D_CRT_SECURE_NO_WARNINGS /D_WIN32_WINNT=0x0600 /DSTATICLIB)
-  include_directories(cryptonote/src/Platform/msc)
+set(PROJECT_DISPLAY_NAME "Qwertycoin")
+set(PROJECT_NAME "qwertycoin-zero")
+set(PROJECT_DESCRIPTION "Safe. Simple. Seamless. Secure.")
+set(PROJECT_VERSION "1.1.3")
+set(PROJECT_COPYRIGHT "Copyright 2019 The Qwertycoin Group")
+set(PROJECT_VENDOR_NAME "The Qwertycoin Group")
+set(PROJECT_VENDOR_URL "https://qwertycoin.org")
+set(PROJECT_CURRENCY_DISPLAY_NAME "Qwertycoin")
+set(PROJECT_CURRENCY_TICKER "QWC")
+project(${PROJECT_NAME} VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
 
-  set( CMAKE_CXX_FLAGS "-bigobj -EHsc")
-  set(PLATFORM_DIR Windows)
-  set(BUILD_PLATFORM WIN32)
-  set(BUILD_RESOURCES src/qwertycoinwallet.rc)
-  set(QTMAIN Qt5::WinMain)
-
-elseif (UNIX)
-  
-  set(CRYPTONOTE_SOURCES ${CRYPTONOTE_SOURCES} external/miniupnpc/minissdpc.c)
-
-  if (APPLE)
+if(APPLE)
+    # Compile src/Platform/OSX/System/asm.s file.
     enable_language(ASM)
-    file(GLOB_RECURSE OBJC_SOURCES src/*.mm)
-    set(SOURCES ${SOURCES} ${OBJC_SOURCES})
-    set(PLATFORM_DIR OSX)
-    set(MACOSX_BUNDLE_INFO_STRING "Cryptonote GUI wallet")
-    set(MACOSX_BUNDLE_LONG_VERSION_STRING "${VERSION_VERSION}.${VERSION_MINOR}.${VERSION_PATCH}")
-    set(MACOSX_BUNDLE_BUNDLE_NAME CryptonoteWallet)
-    set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${VERSION_VERSION}.${VERSION_MINOR}.${VERSION_PATCH}")
-    set(MACOSX_BUNDLE_BUNDLE_VERSION "$${VERSION_VERSION}.${VERSION_MINOR}.${VERSION_PATCH}")
+endif()
 
-    find_package(Qt5PrintSupport REQUIRED)
+if(WIN32 AND NOT MSVC)
+    message(FATAL_ERROR "Only MSVC is supported on this platform!")
+endif()
 
-    include_directories(/usr/include/malloc)
+include(project/CompilerSettings)
+include(project/GlobalVariables)
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -maes -std=c++11 -stdlib=libc++")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -maes -D_DARWIN_C_SOURCE")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework Cocoa -framework OpenGL -framework CoreFoundation -framework Carbon -framework IOKit -L/usr/lib")
+# External dependencies
+set_directory_properties(PROPERTIES EP_BASE "${CMAKE_CURRENT_BINARY_DIR}/_ExternalProjects")
+include(ExternalProject)
+include(external/Boost)
+include(external/qrencode)
+include(external/Qt5)
+include(external/Qwertycoin)
+include(external/Threads)
 
-    set(MACOSX_BUNDLE_ICON_FILE Qwertycoin.icns)
-    set(APPLICATION_ICON src/images/Qwertycoin.icns)
-    set_source_files_properties(${APPLICATION_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-
-    set(BUILD_PLATFORM MACOSX_BUNDLE)
-    set(BUILD_RESOURCES ${APPLICATION_ICON})
-
-    GET_TARGET_PROPERTY(QT_LIB_DIR "${Qt5Widgets_LIBRARIES}" LOCATION)
-    GET_FILENAME_COMPONENT(QT_LIB_DIR "${QT_LIB_DIR}" PATH)
-
-  else(APPLE)
-
-    set(PLATFORM_DIR Linux)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -maes -std=c++11")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -maes -std=c11")
-  endif (APPLE)
-endif ()
-
-include_directories(cryptonote/src/Platform/${PLATFORM_DIR})
-file(GLOB PLATFORM_SOURCES cryptonote/src/Platform/${PLATFORM_DIR}/System/*)
-set(CRYPTONOTE_SOURCES ${CRYPTONOTE_SOURCES} ${PLATFORM_SOURCES} ${CRYPTONOTE_PLATFORM})
-
-if(MSVC)
-#else(MSVC)
-#  add_subdirectory(external)
-endif(MSVC)
-
-add_library(${CRYPTONOTE_LIB} STATIC ${CRYPTONOTE_SOURCES})
-add_library(Mnemonics ${Mnemonics})
-set_target_properties(${CRYPTONOTE_LIB} PROPERTIES COMPILE_DEFINITIONS _GNU_SOURCE)
-if (APPLE OR ${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-  target_link_libraries(${CRYPTONOTE_LIB} ${Boost_LIBRARIES} ${Qt5DBus_LIBRARIES} -lresolv)
-else ()
-  target_link_libraries(${CRYPTONOTE_LIB} ${Boost_LIBRARIES} ${Qt5DBus_LIBRARIES})
-endif ()
-set_target_properties(Mnemonics PROPERTIES COMPILE_DEFINITIONS _GNU_SOURCE)
-target_link_libraries(Mnemonics ${Boost_LIBRARIES})
-
-add_executable(${PROJECT_NAME} ${BUILD_PLATFORM} ${BUILD_RESOURCES} ${SOURCES} ${HEADERS} ${UIS} ${RCC})
-
-set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_DEFINITIONS _GNU_SOURCE)
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${QTMAIN} ${CRYPTONOTE_LIB} ${Qt5DBus_LIBRARIES} ${QRENCODE_LIB} Mnemonics)
-
-if (APPLE)
-  qt5_use_modules(${PROJECT_NAME} PrintSupport)
-elseif (UNIX)
-  target_link_libraries(${PROJECT_NAME} -lpthread)
-elseif (WIN32)
-  target_link_libraries(${PROJECT_NAME} Imm32 Iphlpapi Winmm UxTheme d3d9 dxguid Rpcrt4 Wtsapi32 WSock32 ws2_32 Dwmapi)
-
-endif (APPLE)
-
-add_definitions(-DUSE_LITE_WALLET)
-
-qt5_use_modules(${PROJECT_NAME} Widgets Gui Network)
+add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/src")

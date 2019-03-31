@@ -180,12 +180,6 @@
    <header>Gui/Options/DonationOptionsFrame.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>WalletGui::PrivacyFrame</class>
-   <extends>QWidget</extends>
-   <header>Gui/Options/PrivacyFrame.h</header>
-   <container>1</container>
-  </customwidget>
  </customwidgets>
  <resources/>
  <connections>

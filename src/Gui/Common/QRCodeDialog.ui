@@ -105,7 +105,7 @@
   <customwidget>
    <class>WalletGui::QRLabel</class>
    <extends>QLabel</extends>
-   <header>gui/QRLabel.h</header>
+   <header>Gui/Common/QRLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
