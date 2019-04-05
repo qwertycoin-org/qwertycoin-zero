@@ -1,9 +1,9 @@
 ![image](https://cdn.qwertycoin.org/images/press/other/qwc-github-3.png)
 #### Master Build Status
-[![Build Status](https://travis-ci.org/qwertycoin-org/qwertycoin-zero.svg?branch=master)](https://travis-ci.org/qwertycoin-org/qwertycoin-zero) [![Build status](https://ci.appveyor.com/api/projects/status/r6crc8sibsnposx0/branch/master?svg=true)](https://ci.appveyor.com/project/Qwertycoin/qwertycoin-zero/branch/master)
+[![Build Status](https://travis-ci.org/qwertycoin-org/qwertycoin-zero.svg?branch=master)](https://travis-ci.org/qwertycoin-org/qwertycoin-zero) [![Build status](https://ci.appveyor.com/api/projects/status/r6crc8sibsnposx0/branch/master?svg=true)](https://ci.appveyor.com/project/Qwertycoin/qwertycoin-zero/branch/master) [![codecov](https://codecov.io/gh/qwertycoin-org/qwertycoin-zero/branch/master/graph/badge.svg)](https://codecov.io/gh/qwertycoin-org/qwertycoin-zero)
 
 #### Development Build Status
-[![Build Status](https://travis-ci.org/qwertycoin-org/qwertycoin-zero.svg?branch=dev)](https://travis-ci.org/qwertycoin-org/qwertycoin-zero) [![Build status](https://ci.appveyor.com/api/projects/status/r6crc8sibsnposx0/branch/master?svg=true)](https://ci.appveyor.com/project/Qwertycoin/qwertycoin-zero/branch/dev)
+[![Build Status](https://travis-ci.org/qwertycoin-org/qwertycoin-zero.svg?branch=dev)](https://travis-ci.org/qwertycoin-org/qwertycoin-zero) [![Build status](https://ci.appveyor.com/api/projects/status/r6crc8sibsnposx0/branch/dev?svg=true)](https://ci.appveyor.com/project/Qwertycoin/qwertycoin-zero/branch/dev) [![codecov](https://codecov.io/gh/qwertycoin-org/qwertycoin-zero/branch/dev/graph/badge.svg)](https://codecov.io/gh/qwertycoin-org/qwertycoin-zero)
 
 This is the lite version of Qwertycoin GUI. It works via remote daemon and doesn't store blockchain on your PC. The remote nodes are rewarded for their service. Qwertycoin wallets, connected to masternode, are paying small additional fee (0.25% from the amount of transaction) to that node when are sending transactions through it. These fees are supposed to help to cover the costs of operating Qwertycoin nodes.
 
