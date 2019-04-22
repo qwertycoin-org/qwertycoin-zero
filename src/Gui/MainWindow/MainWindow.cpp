@@ -63,7 +63,7 @@
 #include "Gui/Options/OptionsDialog.h"
 #include "Style/Style.h"
 #include "Gui/Common/RestoreFromMnemonicSeedDialog.h"
-#include "mnemonics/electrum-words.h"
+#include "Mnemonics/electrum-words.h"
 #include "CryptoNote.h"
 #include "crypto/crypto.h"
 extern "C"
