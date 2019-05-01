@@ -5,7 +5,7 @@ set(CMAKE_AUTOMOC ON) # Instruct CMake to run moc automatically when needed
 set(CMAKE_AUTOUIC ON) # Create code from a list of Qt designer ui files
 set(CMAKE_AUTORCC ON) # Automatically handle Qt resource files
 
-set(Qt5_COMPONENTS Gui Widgets Network DBus)
+set(Qt5_COMPONENTS Core DBus Gui Network Widgets)
 if(APPLE)
     list(APPEND Qt5_COMPONENTS PrintSupport)
 endif()
@@ -16,6 +16,6 @@ if(EXISTS "$ENV{Qt5_DIR}" AND IS_DIRECTORY "$ENV{Qt5_DIR}")
     find_package(Qt5 REQUIRED COMPONENTS ${Qt5_COMPONENTS})
 else()
     message(STATUS "Qt5_DIR is not set. Using Hunter (package manager) to install Qt5.")
-    hunter_add_package(Qt COMPONENTS ${Qt5_COMPONENTS})
+    hunter_add_package(Qt)
     find_package(Qt5 QUIET REQUIRED COMPONENTS ${Qt5_COMPONENTS})
 endif()

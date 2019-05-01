@@ -93,6 +93,7 @@ include(external/Boost)
 include(external/qrencode)
 include(external/Qt5)
 include(external/Qwertycoin)
+include(external/sparsehash)
 include(external/codecov)
 include(external/Threads)
 
