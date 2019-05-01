@@ -35,5 +35,3 @@ build_script:
         -DBUILD_ALL:BOOL=TRUE
         ..
     - cmake --build . --config %QWC_BUILD_TYPE%
-    - ctest -C %QWC_BUILD_TYPE% -R "%QWC_TESTS_REGEXP%" -V -j 2
-    - cpack -C %QWC_BUILD_TYPE%
