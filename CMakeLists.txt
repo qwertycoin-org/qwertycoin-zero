@@ -99,4 +99,6 @@ include(external/Threads)
 
 add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/src")
 
-include(project/CPackConfig)
+if(BUILD_WITH_PACKAGE)
+    include(project/CPackConfig)
+endif()
