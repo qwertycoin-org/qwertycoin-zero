@@ -142,14 +142,11 @@ ETN: etnkJXJFqiH9FCt6Gq2HWHPeY92YFsmvKX7qaysvnV11M796Xmovo2nSu6EUCMnniqRqAhKX9AQ
 ### Downloads <a name="downloads"></a>
 | Operating System | Download                                 |
 | ---------------- | ---------------------------------------- |
-| Windows 32       | https://releases.qwertycoin.org/get/cli/latest/win32 |
-| Windows 64       | https://releases.qwertycoin.org/get/cli/latest/win64 |
-| macOS 10.8 & Later | https://releases.qwertycoin.org/get/cli/latest/macos |
-| Linux 32         | https://releases.qwertycoin.org/get/cli/latest/linux32 |
-| Linux 64         | https://releases.qwertycoin.org/get/cli/latest/linux64 |
-| OpenBSD 64       | https://releases.qwertycoin.org/get/cli/latest/openbsd64 |
-| FreeBSD 64       | https://releases.qwertycoin.org/get/cli/latest/freebsd64 |
-| Linux ARM 64     | https://releases.qwertycoin.org/get/cli/latest/arm64 |
+| Windows 32       | https://releases.qwertycoin.org/get/gui/latest/win32 |
+| Windows 64       | https://releases.qwertycoin.org/get/gui/latest/win64 |
+| macOS 10.8 & Later | https://releases.qwertycoin.org/get/gui/latest/macos |
+| Linux 64         | https://releases.qwertycoin.org/get/gui/latest/linux64 |
+| Linux ARM 64     | https://releases.qwertycoin.org/get/gui/latest/arm64 |
 | Other platforms      | https://releases.qwertycoin.org |
 
 ### Useful Links <a name="usefullinks"></a>

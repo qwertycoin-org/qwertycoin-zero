@@ -10,7 +10,6 @@ matrix:
               - CMAKE_GENERATOR_NAME="Unix Makefiles"
               - CMAKE_BUILD_TYPE="Debug"
               - CMAKE_TOOLCHAIN_FILE_NAME=gcc-cxx14-c11.cmake
-              - CTEST_REGEXP="Tests$"
         - name: "Linux, Release"
           os: linux
           dist: xenial
@@ -19,7 +18,6 @@ matrix:
               - CMAKE_GENERATOR_NAME="Unix Makefiles"
               - CMAKE_BUILD_TYPE="Release"
               - CMAKE_TOOLCHAIN_FILE_NAME=gcc-cxx14-c11.cmake
-              - CTEST_REGEXP="Tests$"
         - name: "macOS, Debug"
           os: osx
           osx_image: xcode10.1
@@ -27,7 +25,6 @@ matrix:
               - CMAKE_GENERATOR_NAME="Unix Makefiles"
               - CMAKE_BUILD_TYPE="Debug"
               - CMAKE_TOOLCHAIN_FILE_NAME=clang-cxx14.cmake
-              - CTEST_REGEXP="Tests$"
         - name: "macOS, Release"
           os: osx
           osx_image: xcode10.1
@@ -35,7 +32,6 @@ matrix:
               - CMAKE_GENERATOR_NAME="Unix Makefiles"
               - CMAKE_BUILD_TYPE="Release"
               - CMAKE_TOOLCHAIN_FILE_NAME=clang-cxx14.cmake
-              - CTEST_REGEXP="Tests$"
 
 env:
     global:
