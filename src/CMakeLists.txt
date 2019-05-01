@@ -382,6 +382,7 @@ configure_file(
     @ONLY
 )
 message(STATUS "CryptoNoteWalletConfig.h: ${CMAKE_CURRENT_BINARY_DIR}/CryptoNoteWalletConfig.h")
+message(STATUS "Generated version.h header: ${CMAKE_CURRENT_BINARY_DIR}/version.h")
 
 add_executable(${TARGET_NAME} WIN32 MACOSX_BUNDLE ${TARGET_SRC})
 add_executable(${TARGET_NAME_ALIAS} ALIAS ${TARGET_NAME})
