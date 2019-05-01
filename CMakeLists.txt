@@ -70,6 +70,7 @@ endif()
 
 set(PROJECT_DISPLAY_NAME "Qwertycoin")
 set(PROJECT_NAME "qwertycoin-zero")
+set(PROJECT_CURRENCY_TICKER "QWC")
 set(PROJECT_DESCRIPTION "Safe. Simple. Seamless. Secure.")
 set(PROJECT_VERSION "${PROJECT_GIT_TAG}")
 set(PROJECT_COPYRIGHT "Copyright 2019 The Qwertycoin Group")
