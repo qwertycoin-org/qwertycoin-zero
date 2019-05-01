@@ -41,6 +41,7 @@ script:
     - cd ./build
     - cmake -G "$CMAKE_GENERATOR_NAME" -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=cmake/polly/$CMAKE_TOOLCHAIN_FILE_NAME ..
     - cmake --build . --config Release
+    - cmake --build . --config Release --target package
 
 after_success:
     # Create lcov report

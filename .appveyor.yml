@@ -22,3 +22,4 @@ build_script:
         -DCMAKE_TOOLCHAIN_FILE=cmake/polly/vs-15-2017-win64.cmake
         ..
     - cmake --build . --config Release
+    - cmake --build . --config Release --target package
