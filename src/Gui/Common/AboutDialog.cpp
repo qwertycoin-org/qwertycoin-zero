@@ -22,7 +22,6 @@
 #include "AboutDialog.h"
 #include "Settings/Settings.h"
 #include "version.h"
-#include "CryptoNoteWalletConfig.h"
 
 #include "ui_AboutDialog.h"
 

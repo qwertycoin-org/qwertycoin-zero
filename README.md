@@ -72,7 +72,7 @@ cd ./build
 cmake -DBUILD_ALL:BOOL=TRUE ..
 cmake --build . --config Release
 ```
-- If all went well, it will complete successfully, and you will find all your binaries in the `./build/src` directory.
+- If all went well, it will complete successfully, and you will find all your binaries in the `./build/src/Release` directory.
 
 #### Windows 10 <a name="build-windows"></a>
 
@@ -116,7 +116,7 @@ cd ./build
 cmake -DBUILD_ALL:BOOL=TRUE ..
 cmake --build . --config Release
 ```
-- If all went well, it will complete successfully, and you will find all your binaries in the `./build/src` directory.
+- If all went well, it will complete successfully, and you will find all your binaries in the `./build/src/Release` directory.
 
 ## Donate <a name="donate"></a>
 
@@ -142,11 +142,11 @@ ETN: etnkJXJFqiH9FCt6Gq2HWHPeY92YFsmvKX7qaysvnV11M796Xmovo2nSu6EUCMnniqRqAhKX9AQ
 ### Downloads <a name="downloads"></a>
 | Operating System | Download                                 |
 | ---------------- | ---------------------------------------- |
-| Windows 32       | https://releases.qwertycoin.org/get/gui/latest/win32 |
-| Windows 64       | https://releases.qwertycoin.org/get/gui/latest/win64 |
-| macOS 10.8 & Later | https://releases.qwertycoin.org/get/gui/latest/macos |
-| Linux 64         | https://releases.qwertycoin.org/get/gui/latest/linux64 |
-| Linux ARM 64     | https://releases.qwertycoin.org/get/gui/latest/arm64 |
+| Windows 32       | https://releases.qwertycoin.org/get/zero/latest/win32 |
+| Windows 64       | https://releases.qwertycoin.org/get/zero/latest/win64 |
+| macOS 10.8 & Later | https://releases.qwertycoin.org/get/zero/latest/macos |
+| Linux 64         | https://releases.qwertycoin.org/get/zero/latest/linux64 |
+| Linux ARM 64     | https://releases.qwertycoin.org/get/zero/latest/arm64 |
 | Other platforms      | https://releases.qwertycoin.org |
 
 ### Useful Links <a name="usefullinks"></a>
