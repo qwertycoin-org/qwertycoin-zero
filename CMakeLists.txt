@@ -1,3 +1,8 @@
+# Qwertycoin: C++ client, tools and libraries.
+# Copyright 2019 (c) The Qwertycoin Group.
+# Licensed under the GNU General Public License, Version 3.
+# See the file LICENSE from this package for details.
+
 cmake_minimum_required(VERSION 3.10)
 
 if(POLICY CMP0074)
@@ -18,19 +23,35 @@ message(STATUS "CMake build type: ${CMAKE_BUILD_TYPE}")
 
 # Configure Hunter (CMake driven cross-platform package manager for C/C++).
 # WARNING: Must be included before project(...) function call!
-set(HUNTER_CONFIGURATION_TYPES Release CACHE STRING "Hunter configuration types")
+set(HUNTER_CONFIGURATION_TYPES Release;Debug CACHE STRING "Hunter configuration types")
 set(HUNTER_JOBS_NUMBER 4 CACHE STRING "Hunter jobs number")
 include(hunter/HunterGate)
 HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.23.150.tar.gz"
-    SHA1 "7f1604b4dd3fb3e9478fa5a60928486df3a6b5cb"
+    URL "https://github.com/ruslo/hunter/archive/v0.23.158.tar.gz"
+    SHA1 "4f3d8287a546091d1968ee80e02f121b312fceea"
     FILEPATH "${CMAKE_CURRENT_LIST_DIR}/cmake/hunter/HunterConfig.cmake"
 )
 
-# Read git revision.
+# Read project version from git tag.
 find_package(Git)
 message(STATUS "Found Git: ${GIT_FOUND}")
 if(GIT_FOUND)
+    execute_process(
+        COMMAND "${GIT_EXECUTABLE}" describe --tags --abbrev=0 --match "v*"
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+        RESULT_VARIABLE PROJECT_GIT_RESULT
+        OUTPUT_VARIABLE PROJECT_GIT_TAG
+        ERROR_VARIABLE PROJECT_GIT_ERROR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_STRIP_TRAILING_WHITESPACE)
+    if(NOT PROJECT_GIT_RESULT EQUAL 0)
+        set(PROJECT_GIT_TAG "0.0.0")
+        message(WARNING "Failed to execute Git: ${PROJECT_GIT_ERROR}")
+    else()
+        string(REPLACE "v" "" PROJECT_GIT_TAG ${PROJECT_GIT_TAG})
+        message(STATUS "Git tag: ${PROJECT_GIT_TAG}")
+    endif()
+
     execute_process(
         COMMAND "${GIT_EXECUTABLE}" rev-parse --short HEAD
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -45,20 +66,15 @@ if(GIT_FOUND)
     else()
         message(STATUS "Git commit ID: ${PROJECT_GIT_COMMIT_ID}")
     endif()
-else()
-    set(PROJECT_GIT_COMMIT_ID "unknown")
-    message(WARNING "Git not found")
 endif()
 
 set(PROJECT_DISPLAY_NAME "Qwertycoin")
 set(PROJECT_NAME "qwertycoin-zero")
 set(PROJECT_DESCRIPTION "Safe. Simple. Seamless. Secure.")
-set(PROJECT_VERSION "1.1.4")
+set(PROJECT_VERSION "${PROJECT_GIT_TAG}")
 set(PROJECT_COPYRIGHT "Copyright 2019 The Qwertycoin Group")
 set(PROJECT_VENDOR_NAME "The Qwertycoin Group")
 set(PROJECT_VENDOR_URL "https://qwertycoin.org")
-set(PROJECT_CURRENCY_DISPLAY_NAME "Qwertycoin")
-set(PROJECT_CURRENCY_TICKER "QWC")
 project(${PROJECT_NAME} VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
 
 if(APPLE)
@@ -66,11 +82,8 @@ if(APPLE)
     enable_language(ASM)
 endif()
 
-if(WIN32 AND NOT MSVC)
-    message(FATAL_ERROR "Only MSVC is supported on this platform!")
-endif()
-
 include(project/CompilerSettings)
+include(project/GlobalOptions)
 include(project/GlobalVariables)
 
 # External dependencies
@@ -80,6 +93,7 @@ include(external/Boost)
 include(external/qrencode)
 include(external/Qt5)
 include(external/Qwertycoin)
+include(external/codecov)
 include(external/Threads)
 
 add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/src")

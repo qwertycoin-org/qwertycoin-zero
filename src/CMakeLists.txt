@@ -377,6 +377,8 @@ endif()
 configure_file(
     "${CMAKE_CURRENT_LIST_DIR}/CryptoNoteWalletConfig.h.in"
     "${CMAKE_CURRENT_BINARY_DIR}/CryptoNoteWalletConfig.h"
+    "${CMAKE_CURRENT_LIST_DIR}/version.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/version.h"
     @ONLY
 )
 message(STATUS "CryptoNoteWalletConfig.h: ${CMAKE_CURRENT_BINARY_DIR}/CryptoNoteWalletConfig.h")

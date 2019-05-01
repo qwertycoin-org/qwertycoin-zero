@@ -1,14 +1,12 @@
 ![image](https://cdn.qwertycoin.org/images/press/other/qwc-github-3.png)
 #### Master Build Status
-[![Build Status](https://travis-ci.org/qwertycoin-org/qwertycoin-zero.svg?branch=master)](https://travis-ci.org/qwertycoin-org/qwertycoin-zero) [![Build status](https://ci.appveyor.com/api/projects/status/r6crc8sibsnposx0/branch/master?svg=true)](https://ci.appveyor.com/project/Qwertycoin/qwertycoin-zero/branch/master)
+[![Build Status](https://travis-ci.org/qwertycoin-org/qwertycoin-zero.svg?branch=master)](https://travis-ci.org/qwertycoin-org/qwertycoin-zero)
+[![Build status](https://ci.appveyor.com/api/projects/status/udpsj8mf5x7s1rt6/branch/master?svg=true)](https://ci.appveyor.com/project/Qwertycoin/qwertycoin-zero/branch/master) [![codecov](https://codecov.io/gh/qwertycoin-org/qwertycoin-zero/branch/master/graph/badge.svg)](https://codecov.io/gh/qwertycoin-org/qwertycoin-zero)
 
 
 
 #### Development Build Status
-[![Build Status](https://travis-ci.org/qwertycoin-org/qwertycoin-zero.svg?branch=dev)](https://travis-ci.org/qwertycoin-org/qwertycoin-zero) [![Build status](https://ci.appveyor.com/api/projects/status/r6crc8sibsnposx0/branch/dev?svg=true)](https://ci.appveyor.com/project/Qwertycoin/qwertycoin-zero/branch/dev)
-
-
-
+[![Build Status](https://travis-ci.org/qwertycoin-org/qwertycoin-zero.svg?branch=dev)](https://travis-ci.org/qwertycoin-org/qwertycoin-zero) [![Build status](https://ci.appveyor.com/api/projects/status/udpsj8mf5x7s1rt6/branch/dev?svg=true)](https://ci.appveyor.com/project/Qwertycoin/qwertycoin-zero/branch/dev)
 
 This is the lite version of Qwertycoin GUI. It works via remote daemon and doesn't store blockchain on your PC. The remote nodes are rewarded for their service. Qwertycoin wallets, connected to masternode, are paying small additional fee (0.25% from the amount of transaction) to that node when are sending transactions through it. These fees are supposed to help to cover the costs of operating Qwertycoin nodes.
 
@@ -57,8 +55,8 @@ More information at [qwertycoin.org](https://qwertycoin.org/)
 
 ##### Prerequisites
 
-- You will need the following packages: boost (1.64 or higher), QT Library (5.9.0 or higher) [cmake (3.10 or higher)](https://github.com/qwertycoin-org/qwertycoin/wiki/E01.-Install-Cmake-3.10), git, gcc (4.9 or higher), g++ (4.9 or higher), make, and python. Most of these should already be installed on your system.
-- For example on Ubuntu by running:
+- You will need the following packages: build-essential, [cmake (3.10 or higher)](https://github.com/qwertycoin-org/qwertycoin/wiki/E01.-Install-Cmake-3.10) and git;
+- Most of these should already be installed on your system. For example on Ubuntu by running:
 ```
 sudo apt-get install build-essential python-dev gcc g++ git cmake libboost-all-dev qtbase5-dev
 ```
@@ -71,10 +69,10 @@ git clone --recurse-submodules https://github.com/qwertycoin-org/qwertycoin-zero
 cd ./qwertycoin-zero
 mkdir ./build
 cd ./build
-cmake ..
+cmake -DBUILD_ALL:BOOL=TRUE ..
 cmake --build . --config Release
 ```
-- If all went well, it will complete successfully, and you will find all your binaries in the `./build/Release` directory.
+- If all went well, it will complete successfully, and you will find all your binaries in the `./build/src` directory.
 
 #### Windows 10 <a name="build-windows"></a>
 
@@ -89,14 +87,14 @@ cmake --build . --config Release
 - From the start menu, open "x64 Native Tools Command Prompt for vs2017";
 - And the run the following commands:
 ```
-git clone https://github.com/qwertycoin-org/qwertycoin-zero
+git clone --recurse-submodules https://github.com/qwertycoin-org/qwertycoin-zero
 cd qwertycoin-zero
 md build
 cd build
-cmake -G "Visual Studio 15 2017 Win64" ..
+cmake -G "Visual Studio 15 2017 Win64" -DBUILD_ALL:BOOL=TRUE ..
 cmake --build . --config Release
 ```
-- If all went well, it will complete successfully, and you will find all your binaries in the `.\build\Release` directory;
+- If all went well, it will complete successfully, and you will find all your binaries in the `.\build\src\Release` directory;
 - Additionally, a `.sln` file will have been created in the `build` directory. If you wish to open the project in Visual Studio with this, you can.
 
 #### Apple macOS <a name="build-apple"></a>
@@ -111,35 +109,14 @@ cmake --build . --config Release
 
 - After installing dependencies run simple script:
 ```
-git clone https://github.com/qwertycoin-org/qwertycoin-zero
+git clone --recurse-submodules https://github.com/qwertycoin-org/qwertycoin-zero
 cd ./qwertycoin-zero
 mkdir ./build
 cd ./build
-cmake ..
-cmake --build . --config Release
-```
-- If all went well, it will complete successfully, and you will find all your binaries in the `./build/Release` directory.
-
-
-##### Building
-
-- After installing dependencies run simple script:
-```
-git clone https://github.com/qwertycoin-org/qwertycoin
-cd ./qwertycoin
-mkdir ./build
-cd ./build
-cmake -DCMAKE_TOOLCHAIN_FILE=cmake/polly/android-ndk-r18b-api-21-x86-clang-libcxx.cmake -DBUILD_ALL:BOOL=TRUE -DBUILD_WITH_TESTS:BOOL=FALSE -DSTATIC=ON -DBUILD_64=OFF -DANDROID=true -DBUILD_TAG="android" ..
+cmake -DBUILD_ALL:BOOL=TRUE ..
 cmake --build . --config Release
 ```
 - If all went well, it will complete successfully, and you will find all your binaries in the `./build/src` directory.
-
-#### Advanced options (for all platforms)
-
-* Parallel build: run `make -j<number of threads>` instead of `make`;
-* Debug build: run `make build-debug`;
-* Test suite: run `make test-release` to run tests in addition to building. Running `make test-debug` will do the same to the debug version;
-* Building with Clang: it may be possible to use Clang instead of GCC, but this may not work everywhere. To build, run `export CC=clang CXX=clang++` before running `make`.
 
 ## Donate <a name="donate"></a>
 
