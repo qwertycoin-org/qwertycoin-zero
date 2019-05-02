@@ -25,7 +25,7 @@
 #include "ICryptoNoteAdapter.h"
 #include "INodeAdapter.h"
 
-#include <BlockchainExplorerData.h>
+#include <BlockchainExplorer/BlockchainExplorerData.h>
 
 namespace WalletGui {
 
