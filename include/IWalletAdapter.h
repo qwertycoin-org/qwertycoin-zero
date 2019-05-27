@@ -21,8 +21,8 @@
 
 #include <QObject>
 
-#include "CryptoNote.h"
-#include "IWallet.h"
+#include <CryptoNote.h>
+#include <Wallet/IWallet.h>
 
 namespace CryptoNote {
   struct WalletTransaction;

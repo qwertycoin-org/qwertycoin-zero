@@ -24,7 +24,7 @@
 #include "Models/TransfersModel.h"
 #include "Style/Style.h"
 
-#include "IWallet.h"
+#include "Wallet/IWallet.h"
 
 namespace WalletGui {
 

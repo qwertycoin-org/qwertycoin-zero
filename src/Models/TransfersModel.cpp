@@ -26,7 +26,7 @@
 #include "TransfersModel.h"
 #include "ICryptoNoteAdapter.h"
 #include "INodeAdapter.h"
-#include "IWallet.h"
+#include "Wallet/IWallet.h"
 #include "IWalletAdapter.h"
 #include "TransactionsModel.h"
 
