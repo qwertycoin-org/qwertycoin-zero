@@ -33,7 +33,7 @@
 #include "ICryptoNoteAdapter.h"
 #include "IDonationManager.h"
 #include "INodeAdapter.h"
-#include "IWallet.h"
+#include "Wallet/IWallet.h"
 #include "Models/AddressBookModel.h"
 #include "Models/WalletStateModel.h"
 #include "SendGlassFrame.h"

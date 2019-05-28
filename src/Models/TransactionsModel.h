@@ -23,7 +23,7 @@
 #include <QBitArray>
 #include <QSet>
 
-#include "IWallet.h"
+#include <Wallet/IWallet.h>
 
 #include "ICryptoNoteAdapter.h"
 #include "INodeAdapter.h"
