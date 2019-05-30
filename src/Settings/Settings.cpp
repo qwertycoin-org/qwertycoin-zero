@@ -29,7 +29,7 @@
 #include <QUuid>
 
 #include <Common/Util.h>
-#include <CryptoNoteConfig.h>
+#include <../src/config/CryptoNoteConfig.h>
 
 #include "Settings.h"
 #include "Application/CommandLineParser.h"

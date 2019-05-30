@@ -13,7 +13,7 @@
 #include "Common/Base58.h"
 #include "Common/StringTools.h"
 
-#include <CryptoNoteConfig.h>
+#include <../src/config/CryptoNoteConfig.h>
 #include <CryptoNoteCore/CryptoNoteBasicImpl.h>
 #include <boost/utility/value_init.hpp>
 #include "crypto/crypto.h"
