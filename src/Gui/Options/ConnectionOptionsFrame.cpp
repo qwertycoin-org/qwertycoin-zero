@@ -20,7 +20,7 @@
 #include <QUrl>
 #include <QComboBox>
 
-#include <../src/config/CryptoNoteConfig.h>
+#include <config/CryptoNoteConfig.h>
 
 #include "ConnectionOptionsFrame.h"
 #include "Settings/Settings.h"
