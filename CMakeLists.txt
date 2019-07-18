@@ -11,6 +11,11 @@ if(POLICY CMP0074)
     cmake_policy(SET CMP0074 NEW)
 endif()
 
+if(POLICY CMP0087)
+    # Install CODE|SCRIPT allow the use of generator expressions.
+    cmake_policy(SET CMP0087 NEW)
+endif()
+
 list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_LIST_DIR}/cmake/find")
 
