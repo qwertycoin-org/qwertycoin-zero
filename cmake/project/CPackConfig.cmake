@@ -25,7 +25,13 @@ elseif(PROJECT_OS_MACOS) # macOS
 elseif(PROJECT_OS_WINDOWS) # Windows
     message(STATUS "Configuring Windows package...")
     set(CPACK_GENERATOR NSIS)
-    # TODO: Configure additional NSIS variables
+    set(CPACK_NSIS_DISPLAY_NAME "${PROJECT_DISPLAY_NAME}")
+    set(CPACK_NSIS_PACKAGE_NAME "${PROJECT_DISPLAY_NAME}")
+    set(CPACK_NSIS_HELP_LINK "${PROJECT_VENDOR_URL}")
+    set(CPACK_NSIS_URL_INFO_ABOUT "${PROJECT_VENDOR_URL}")
+    set(CPACK_NSIS_CONTACT "${PROJECT_VENDOR_NAME} <dev@qwertycoin.org>")
+    set(CPACK_NSIS_EXECUTABLES_DIRECTORY "bin")
+    set(CPACK_NSIS_MUI_FINISHPAGE_RUN "${PROJECT_DISPLAY_NAME}.exe")
 else() # unknown
     message(WARNING "Can't detect platform. Package settings are not initialized!")
 endif()

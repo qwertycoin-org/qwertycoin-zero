@@ -386,12 +386,12 @@ add_executable(${TARGET_NAME_ALIAS} ALIAS ${TARGET_NAME})
 target_include_directories(${TARGET_NAME} ${TARGET_INCLUDE_DIRS})
 target_link_libraries(${TARGET_NAME} ${TARGET_LINK_LIBS})
 target_compile_definitions(${TARGET_NAME} ${TARGET_COMPILE_DEFS})
-set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "Qwertycoin")
+set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_DISPLAY_NAME}")
 
 if(PROJECT_OS_LINUX OR PROJECT_OS_POSIX) # Linux
-    message(STATUS "Configuring Linux installation target...")
+    message(STATUS "Configuring Linux installation targets...")
 elseif(PROJECT_OS_MACOS) # macOS
-    message(STATUS "Configuring macOS installation target...")
+    message(STATUS "Configuring macOS installation targets...")
 
     set(MACOSX_BUNDLE_BUNDLE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_DISPLAY_NAME}.app")
     set(MACOSX_BUNDLE_ICON_FILE_NAME "Qwertycoin.icns")
@@ -438,7 +438,41 @@ elseif(PROJECT_OS_MACOS) # macOS
         BUNDLE DESTINATION .
     )
 elseif(PROJECT_OS_WINDOWS) # Windows
-    message(STATUS "Configuring Windows installation target...")
+    message(STATUS "Configuring Windows installation targets...")
+
+    if(TARGET Qt5::windeployqt)
+        get_target_property(WINDEPLOYQT_EXE Qt5::windeployqt IMPORTED_LOCATION)
+        set(WINDEPLOYQT_TARGET "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/${PROJECT_DISPLAY_NAME}.exe")
+        set(WINDEPLOYQT_TMP_DIR "${CMAKE_CURRENT_BINARY_DIR}/windeployqt")
+        string(
+            JOIN " " WINDEPLOYQT_COMMANDS
+            COMMAND "\"${CMAKE_COMMAND}\"" -E remove_directory "\"${WINDEPLOYQT_TMP_DIR}\""
+            COMMAND "\"${CMAKE_COMMAND}\"" -E make_directory "\"${WINDEPLOYQT_TMP_DIR}\""
+            COMMAND "\"${WINDEPLOYQT_EXE}\"" --dir "\"${WINDEPLOYQT_TMP_DIR}\"" "\"${WINDEPLOYQT_TARGET}\""
+        )
+
+        # execute windeployqt in a tmp directory
+        install(CODE "execute_process(${WINDEPLOYQT_COMMANDS})")
+
+        # copy deployment directory during installation
+        install(
+            DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/windeployqt/" # trailing slash is important!
+            DESTINATION bin
+        )
+    endif()
+
+    include(InstallRequiredSystemLibraries)
+    install(
+        PROGRAMS ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
+        DESTINATION bin
+    )
+
+    install(
+        TARGETS ${TARGET_NAME}
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION bin
+        ARCHIVE DESTINATION bin/static
+    )
 else() # unknown
-    message(WARNING "Can't detect platform. Installation target is not properly initialized!")
+    message(WARNING "Can't detect platform. Installation targets are not configured!")
 endif()
