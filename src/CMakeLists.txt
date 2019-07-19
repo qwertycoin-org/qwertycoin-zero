@@ -390,6 +390,13 @@ set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_DISPLAY_N
 
 if(PROJECT_OS_LINUX OR PROJECT_OS_POSIX) # Linux
     message(STATUS "Configuring Linux installation targets...")
+
+    install(
+        TARGETS ${TARGET_NAME}
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib/static
+    )
 elseif(PROJECT_OS_MACOS) # macOS
     message(STATUS "Configuring macOS installation targets...")
 

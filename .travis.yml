@@ -55,6 +55,7 @@ addons:
             - unzip
             - wget
             - lcov
+            - rpm
         sources:
             - ubuntu-toolchain-r-test
     homebrew: # macOS

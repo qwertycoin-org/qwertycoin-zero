@@ -15,7 +15,22 @@ set(CPACK_STRIP_FILES ON)
 
 if(PROJECT_OS_LINUX OR PROJECT_OS_POSIX) # Linux
     message(STATUS "Configuring Linux (or POSIX) package...")
+
     set(CPACK_GENERATOR DEB RPM)
+    set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/qwertycoin")
+
+    # DEB
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "qt5-qtbase >= 5.3.2, qt5-qtbase-gui >= 5.3.2")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${CPACK_PACKAGE_VENDOR} <dev@qwertycoin.org>")
+    set(CPACK_DEBIAN_PACKAGE_SECTION Office)
+    set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+
+    # RPM
+    set(CPACK_RPM_PACKAGE_REQUIRES "qt5-qtbase >= 5.3.2, qt5-qtbase-gui >= 5.3.2")
+    set(CPACK_RPM_PACKAGE_VENDOR "${CPACK_PACKAGE_VENDOR} <dev@qwertycoin.org>")
+    set(CPACK_RPM_PACKAGE_GROUP Office)
+    set(CPACK_RPM_PACKAGE_LICENSE "MIT")
+    set(CPACK_RPM_COMPRESSION_TYPE "gzip")
 elseif(PROJECT_OS_MACOS) # macOS
     message(STATUS "Configuring macOS package...")
     set(CPACK_GENERATOR DragNDrop)
