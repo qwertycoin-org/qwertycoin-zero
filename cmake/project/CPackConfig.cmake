@@ -17,12 +17,12 @@ if(PROJECT_OS_LINUX OR PROJECT_OS_POSIX) # Linux
     message(STATUS "Configuring Linux (or POSIX) package...")
 
     set(CPACK_GENERATOR DEB RPM)
-    set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/qwertycoin")
+    set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/qwertycoin-zero")
 
     # DEB
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${CPACK_PACKAGE_VENDOR} <dev@qwertycoin.org>")
     set(CPACK_DEBIAN_PACKAGE_SECTION Office)
-    set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+    set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS OFF)
 
     # RPM
     set(CPACK_RPM_PACKAGE_VENDOR "${CPACK_PACKAGE_VENDOR} <dev@qwertycoin.org>")
