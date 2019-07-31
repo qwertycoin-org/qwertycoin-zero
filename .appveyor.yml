@@ -35,3 +35,15 @@ build_script:
         ..
     - cmake --build . --config %QWC_BUILD_TYPE%
     - cpack -C %QWC_BUILD_TYPE%
+
+deploy:
+    description: "Qwertycoin Zero release"
+    provider: GitHub
+    auth_token:
+        secure: "encrypted_github_token"
+    artifact: /build\/dist\/qwertycoin-zero-*/
+    draft: true
+    prerelease: false
+    on:
+        APPVEYOR_REPO_TAG: true
+        QWC_BUILD_TYPE: "Release"
