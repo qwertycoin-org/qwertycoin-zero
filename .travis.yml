@@ -71,3 +71,16 @@ script:
         ..
     - cmake --build . --config $CMAKE_BUILD_TYPE -- -j 2
     - cpack -C $CMAKE_BUILD_TYPE
+
+deploy:
+    provider: releases # GitHub Releases
+    api_key:
+        secure: "YOUR_API_KEY_ENCRYPTED"
+    file: dist/qwertycoin-zero-* # path is relative to the current working directory, not to $TRAVIS_BUILD_DIR
+    file_glob: true
+    draft: true
+    on:
+        branch: master
+        tags: true
+        condition: $CMAKE_BUILD_TYPE = "Release"
+    skip_cleanup: true
