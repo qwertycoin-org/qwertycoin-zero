@@ -40,7 +40,7 @@ deploy:
     description: "Qwertycoin Zero release"
     provider: GitHub
     auth_token:
-        secure: "tEcSlJaNMJjMRzn7ZBH7dfNV41/vem6wrQt+UDl2VTcTHrvsva4OBquvAkKVhsegOJ4ByGtPp16usE8fHnKQuzeFVpZ+FVRVyzw7QMdg7DU9fYXAiAuZFgtrRL85sZBqug26Xk/7GiMJ9hoHO+pQRX17q8ZQEaesVpjfD2BOSdGhVh7iQJf8JtvQv5CWYI6GWJSZhGJHuSfE5SpGgTUPAoK70APYeKZKvcWAgd0UJobvBKGIJFKMv5FrN/uf7sE/V3Rf6NHPQDiDHKWYKmJuBz/IZwM9wyCF7LxpyaywxS1YMe7roDA84YR+vHByXM6W4mnFGR03PpiHIRyef5k6SNBOpgcxPVwtuSugqgOF1tMSYuD+Bk2NWGORpAHjmIWbfZLvt6LSJhFY7NG9nsLghLDR8NTlYYDDY8EBjopaKh4KsExvPY3jt1Bfnt4ui1ZQl+BcYUuy98MGQ6/ck4/OJapWn60jnpKtojVz6BV08asG3I8YkatHDAJ83aTKvkWFer61ckz5QZUzwzFOf2GyUnURzjNvJNl+LJKxcFTyHLIObxa9u1ZtOXLH+w3p73dkKEXnQL7gMEjxUvugXP2i2+3CmOZ4PFYckcjespOuFpIwu2jtJwe3nz25ACk/+hX0k6SLO+nqCj9Oe3nnJasibB8eWVJqEy2ICxhhiFMokLU="
+        secure: "4VgHg760VN6gCaRp6++fnkyxTe/p4vZ8DCNry0YDRhI6O4Pml9+29kfBv2WIjROA"
     artifact: /build\/dist\/qwertycoin-zero-*/
     draft: true
     prerelease: false
