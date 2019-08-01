@@ -386,4 +386,159 @@ add_executable(${TARGET_NAME_ALIAS} ALIAS ${TARGET_NAME})
 target_include_directories(${TARGET_NAME} ${TARGET_INCLUDE_DIRS})
 target_link_libraries(${TARGET_NAME} ${TARGET_LINK_LIBS})
 target_compile_definitions(${TARGET_NAME} ${TARGET_COMPILE_DEFS})
-set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "Qwertycoin")
+
+if(PROJECT_OS_LINUX)
+    set_target_properties(
+        ${TARGET_NAME}
+        PROPERTIES
+            OUTPUT_NAME "qwertycoin-zero"
+            BUILD_WITH_INSTALL_RPATH TRUE
+            INSTALL_RPATH "$ORIGIN/../lib"
+    )
+else()
+    set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_DISPLAY_NAME}")
+endif()
+
+if(PROJECT_OS_LINUX OR PROJECT_OS_POSIX) # Linux
+    message(STATUS "Configuring Linux installation targets...")
+
+    foreach(Qt5Module_NAME Qt5Core Qt5DBus Qt5Gui Qt5Network Qt5Widgets Qt5XcbQpa)
+        install(
+            DIRECTORY "${QT_INSTALL_LIBS}/"
+            DESTINATION lib
+            FILES_MATCHING
+            PATTERN "${CMAKE_SHARED_LIBRARY_PREFIX}${Qt5Module_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}*"
+            PATTERN "cmake*" EXCLUDE
+            PATTERN "pkgconfig*" EXCLUDE
+        )
+    endforeach()
+
+    get_target_property(Qt5QXcbIntegrationPlugin_LIBRARIES Qt5::QXcbIntegrationPlugin LOCATION)
+    install(
+        FILES "${Qt5QXcbIntegrationPlugin_LIBRARIES}"
+        DESTINATION lib/platforms
+    )
+
+    # Xinerama is required for libqxcb.so plugin, but not always available on Linux
+    find_package(X11 REQUIRED)
+    if(X11_FOUND AND EXISTS "${X11_LIBRARY_DIR}")
+        file(
+            GLOB X11_Xinerama_LIBS
+            LIST_DIRECTORIES FALSE
+            "${X11_LIBRARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}xcb-xinerama${CMAKE_SHARED_LIBRARY_SUFFIX}*"
+        )
+        install(
+            FILES ${X11_Xinerama_LIBS}
+            DESTINATION lib
+        )
+    endif()
+
+    install(
+        FILES "${CMAKE_CURRENT_LIST_DIR}/qwertycoinwallet.sh"
+        DESTINATION bin
+        PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ
+        RENAME qwertycoin-zero
+    )
+
+    install(
+        FILES "${CMAKE_CURRENT_LIST_DIR}/qwertycoinwallet.desktop"
+        DESTINATION share/applications
+    )
+
+    install(
+        FILES "${CMAKE_CURRENT_LIST_DIR}/images/Qwertycoin.png"
+        DESTINATION icons/hicolor/256x256/apps
+    )
+
+    install(
+        TARGETS ${TARGET_NAME}
+        RUNTIME DESTINATION lib # NOT bin!
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib/static
+    )
+elseif(PROJECT_OS_MACOS) # macOS
+    message(STATUS "Configuring macOS installation targets...")
+
+    set(MACOSX_BUNDLE_BUNDLE_PATH "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_DISPLAY_NAME}.app")
+    set(MACOSX_BUNDLE_ICON_FILE_NAME "Qwertycoin.icns")
+
+    set_target_properties(
+        ${TARGET_NAME}
+        PROPERTIES
+            OUTPUT_NAME "${PROJECT_DISPLAY_NAME}"
+            MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_DISPLAY_NAME}"
+            MACOSX_BUNDLE_EXECUTABLE_NAME "${PROJECT_DISPLAY_NAME}"
+            MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}"
+            MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+            MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_VERSION}"
+            MACOSX_BUNDLE_GUI_IDENTIFIER "${PROJECT_VENDOR_DOMAIN_REVERSED}.${PROJECT_SHORT_NAME}"
+            MACOSX_BUNDLE_INFO_STRING "" # Don't use. Depricated in Mac OS X 10.5 and newer.
+            MACOSX_BUNDLE_ICON_FILE "${MACOSX_BUNDLE_ICON_FILE_NAME}"
+            MACOSX_BUNDLE_COPYRIGHT "(c) 2000-2099 ${PROJECT_VENDOR_NAME}"
+            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_LIST_DIR}/Info.plist.in"
+    )
+
+    set(ICON_IN "${CMAKE_CURRENT_LIST_DIR}/images/${MACOSX_BUNDLE_ICON_FILE_NAME}")
+    set(ICON_OUT "$<TARGET_FILE_DIR:${TARGET_NAME}>/../Resources/${MACOSX_BUNDLE_ICON_FILE_NAME}")
+    add_custom_command(
+        TARGET ${TARGET_NAME}
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E echo "Creating *.app/Contents/Resources directory."
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:${TARGET_NAME}>/../Resources
+        COMMAND ${CMAKE_COMMAND} -E echo "Copying the .icns file into *.app/Contents/Resources dir."
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different ${ICON_IN} ${ICON_OUT}
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        COMMENT "Copying the .icns file into application bundle's Contents/Resources directory."
+    )
+
+    if(TARGET Qt5::macdeployqt AND EXISTS "${MACOSX_BUNDLE_BUNDLE_PATH}")
+        string(
+            JOIN " " MACDEPLOYQT_ARGS
+            "${MACOSX_BUNDLE_BUNDLE_PATH}" -always-overwrite -appstore-compliant
+        )
+        install(CODE "execute_process(COMMAND $<TARGET_FILE:Qt5::macdeployqt> ${MACDEPLOYQT_ARGS})")
+    endif()
+
+    install(
+        TARGETS ${TARGET_NAME}
+        BUNDLE DESTINATION .
+    )
+elseif(PROJECT_OS_WINDOWS) # Windows
+    message(STATUS "Configuring Windows installation targets...")
+
+    if(TARGET Qt5::windeployqt)
+        get_target_property(WINDEPLOYQT_EXE Qt5::windeployqt IMPORTED_LOCATION)
+        set(WINDEPLOYQT_TARGET "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE}/${PROJECT_DISPLAY_NAME}.exe")
+        set(WINDEPLOYQT_TMP_DIR "${CMAKE_CURRENT_BINARY_DIR}/windeployqt")
+        string(
+            JOIN " " WINDEPLOYQT_COMMANDS
+            COMMAND "\"${CMAKE_COMMAND}\"" -E remove_directory "\"${WINDEPLOYQT_TMP_DIR}\""
+            COMMAND "\"${CMAKE_COMMAND}\"" -E make_directory "\"${WINDEPLOYQT_TMP_DIR}\""
+            COMMAND "\"${WINDEPLOYQT_EXE}\"" --dir "\"${WINDEPLOYQT_TMP_DIR}\"" "\"${WINDEPLOYQT_TARGET}\""
+        )
+
+        # execute windeployqt in a tmp directory
+        install(CODE "execute_process(${WINDEPLOYQT_COMMANDS})")
+
+        # copy deployment directory during installation
+        install(
+            DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/windeployqt/" # trailing slash is important!
+            DESTINATION bin
+        )
+    endif()
+
+    include(InstallRequiredSystemLibraries)
+    install(
+        PROGRAMS ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
+        DESTINATION bin
+    )
+
+    install(
+        TARGETS ${TARGET_NAME}
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION bin
+        ARCHIVE DESTINATION bin/static
+    )
+else() # unknown
+    message(WARNING "Can't detect platform. Installation targets are not configured!")
+endif()
