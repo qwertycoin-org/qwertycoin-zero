@@ -75,7 +75,7 @@ script:
 deploy:
     provider: releases # GitHub Releases
     api_key:
-        secure: "cdc9ac50bc550dc5c4bf2e7ee1a265601e179cf9"
+        secure: "YOUR_API_KEY_ENCRYPTED"
     file: dist/qwertycoin-zero-* # path is relative to the current working directory, not to $TRAVIS_BUILD_DIR
     file_glob: true
     draft: true

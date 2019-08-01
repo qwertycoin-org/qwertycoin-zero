@@ -40,7 +40,7 @@ deploy:
     description: "Qwertycoin Zero release"
     provider: GitHub
     auth_token:
-        secure: "cdc9ac50bc550dc5c4bf2e7ee1a265601e179cf9"
+        secure: "encrypted_github_token"
     artifact: /build\/dist\/qwertycoin-zero-*/
     draft: true
     prerelease: false
