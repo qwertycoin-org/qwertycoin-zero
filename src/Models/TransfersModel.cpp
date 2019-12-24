@@ -22,6 +22,7 @@
 #include <QPainter>
 
 #include "Common/StringTools.h"
+#include "Global/Constants.h"
 #include "crypto/crypto.h"
 #include "TransfersModel.h"
 #include "ICryptoNoteAdapter.h"

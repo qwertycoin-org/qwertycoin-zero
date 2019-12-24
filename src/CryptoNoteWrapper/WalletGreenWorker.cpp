@@ -32,6 +32,7 @@
 #include "CryptoNoteCore/CryptoNoteTools.h"
 #include "CryptoNoteCore/CryptoNoteBasic.h"
 #include "CryptoNoteCore/CryptoNoteFormatUtils.h"
+#include "Global/Constants.h"
 #include "Rpc/CoreRpcServerCommandsDefinitions.h"
 #include "WalletGreenWorker.h"
 #include "GuardExecutor.h"

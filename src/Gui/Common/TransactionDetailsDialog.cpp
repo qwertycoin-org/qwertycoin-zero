@@ -24,6 +24,7 @@
 #include "crypto/crypto.h"
 #include "CryptoNoteCore/CryptoNoteBasic.h"
 #include "Common/StringTools.h"
+#include "Global/Constants.h"
 #include "TransactionDetailsDialog.h"
 #include "Settings/Settings.h"
 #include "CopyColumnDelegate.h"

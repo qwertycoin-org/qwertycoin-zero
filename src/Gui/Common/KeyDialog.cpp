@@ -21,6 +21,7 @@
 #include <QMessageBox>
 #include <Common/Base58.h>
 #include <Common/StringTools.h>
+#include <Global/Constants.h>
 
 #include "KeyDialog.h"
 #include "IWalletAdapter.h"
