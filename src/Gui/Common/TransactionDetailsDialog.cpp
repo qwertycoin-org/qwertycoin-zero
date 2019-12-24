@@ -38,6 +38,8 @@
 
 Q_DECLARE_METATYPE(QList<CryptoNote::WalletTransfer>)
 
+using namespace Qwertycoin;
+
 namespace WalletGui {
 
 namespace {
@@ -164,7 +166,7 @@ TransactionDetailsDialog::TransactionDetailsDialog(ICryptoNoteAdapter* _cryptoNo
 
   Crypto::SecretKey tx_key = m_cryptoNoteAdapter->getNodeAdapter()->getWalletAdapter()->getTransactionSecretKey(static_cast<size_t>(m_index.row()));
   QString transactionKey;
-  if (tx_key != CryptoNote::NULL_SECRET_KEY) {
+  if (tx_key != NULL_SECRET_KEY) {
     transactionKey = QString::fromStdString(Common::podToHex(tx_key));
   } else {
     transactionKey = QString("(n/a)");
@@ -211,7 +213,7 @@ QString TransactionDetailsDialog::getTxProof(const QModelIndex& _index) const {
   Crypto::SecretKey txKey = m_cryptoNoteAdapter->getNodeAdapter()->getWalletAdapter()->getTransactionSecretKey(static_cast<size_t>(m_index.row()));
   QString address_str = QString::fromStdString(transfer.address);
   CryptoNote::AccountPublicAddress addr;
-  if (m_cryptoNoteAdapter->parseAccountAddressString(address_str, addr) && transfer.amount > 0 && txKey != CryptoNote::NULL_SECRET_KEY) {
+  if (m_cryptoNoteAdapter->parseAccountAddressString(address_str, addr) && transfer.amount > 0 && txKey != NULL_SECRET_KEY) {
     proof = m_cryptoNoteAdapter->getTxProof(txHash, addr, txKey);
   }
   return proof;

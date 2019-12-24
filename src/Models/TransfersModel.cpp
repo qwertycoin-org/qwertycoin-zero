@@ -33,6 +33,8 @@
 
 Q_DECLARE_METATYPE(QList<CryptoNote::WalletTransfer>)
 
+using namespace Qwertycoin;
+
 namespace WalletGui {
 
 namespace {
@@ -153,7 +155,7 @@ QVariant TransfersModel::getDecorationRole(const QModelIndex& _index) const {
     Crypto::SecretKey txKey = m_cryptoNoteAdapter->getNodeAdapter()->getWalletAdapter()->getTransactionSecretKey(static_cast<size_t>(m_transactionIndex.row()));
     QString address_str = QString::fromStdString(transfer.address);
     CryptoNote::AccountPublicAddress addr;
-    if (m_cryptoNoteAdapter->parseAccountAddressString(address_str, addr) && transfer.amount > 0 && txKey != CryptoNote::NULL_SECRET_KEY) {
+    if (m_cryptoNoteAdapter->parseAccountAddressString(address_str, addr) && transfer.amount > 0 && txKey != NULL_SECRET_KEY) {
       painter.drawPixmap(7,12, icon.width(), icon.height(), icon);
     }
     return pixmap;

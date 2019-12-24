@@ -29,6 +29,8 @@
 #include "Style/Style.h"
 #include "ui_KeyDialog.h"
 
+using namespace Qwertycoin;
+
 namespace WalletGui {
 
 namespace {
@@ -60,7 +62,7 @@ bool isTrackingKeys(const QByteArray& _array) {
   }
 
   AccountKeys accountKeys = convertByteArrayToAccountKeys(_array);
-  return (std::memcmp(&accountKeys.spendKeys.secretKey, &CryptoNote::NULL_SECRET_KEY, sizeof(Crypto::SecretKey)) == 0);
+  return (std::memcmp(&accountKeys.spendKeys.secretKey, &NULL_SECRET_KEY, sizeof(Crypto::SecretKey)) == 0);
 }
 
 }
@@ -216,7 +218,7 @@ void KeyDialog::keyChanged() {
     accountKeys = convertByteArrayToAccountKeys(_array);
   }
 
-  m_isTracking = (std::memcmp(&accountKeys.spendKeys.secretKey, &CryptoNote::NULL_SECRET_KEY, sizeof(Crypto::SecretKey)) == 0);
+  m_isTracking = (std::memcmp(&accountKeys.spendKeys.secretKey, &NULL_SECRET_KEY, sizeof(Crypto::SecretKey)) == 0);
 
   setWindowTitle(m_isTracking ? tr("Import tracking key") : tr("Import key"));
   if (m_isTracking) {
