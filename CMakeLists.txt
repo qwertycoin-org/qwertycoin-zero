@@ -32,8 +32,8 @@ set(HUNTER_CONFIGURATION_TYPES Release;Debug CACHE STRING "Hunter configuration 
 set(HUNTER_JOBS_NUMBER 4 CACHE STRING "Hunter jobs number")
 include(hunter/HunterGate)
 HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.23.198.tar.gz"
-    SHA1 "f44b698691eedfe9d1ee6763a6fb9b4af7756c24"
+    URL "https://github.com/cpp-pm/hunter/archive/v0.23.240.tar.gz"
+    SHA1 "ca19f3769e6c80cfdd19d8b12ba5102c27b074e0"
     FILEPATH "${CMAKE_CURRENT_LIST_DIR}/cmake/hunter/HunterConfig.cmake"
 )
 
