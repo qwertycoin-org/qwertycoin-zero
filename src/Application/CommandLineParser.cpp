@@ -18,7 +18,7 @@
 // along with Qwertycoin.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <Common/Util.h>
-#include <config/CryptoNoteConfig.h>
+#include <Global/CryptoNoteConfig.h>
 
 #include "CommandLineParser.h"
 
