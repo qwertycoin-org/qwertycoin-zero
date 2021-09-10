@@ -846,11 +846,11 @@ QString WalletGreenWorker::getBalanceProof(quint64& _amount, QString& _message) 
   Crypto::cn_fast_hash(prefix_data.data(), prefix_data.size(), prefix_hash);
 
   // generate proof entries
-  std::vector<CryptoNote::reserve_proof_entry> proofs(selected_transfers.size());
+  std::vector<CryptoNote::RESERVE_PROOF_ENTRY> proofs(selected_transfers.size());
 
   for (size_t i = 0; i < selected_transfers.size(); ++i) {
     const CryptoNote::TransactionOutputInformation &td = selected_transfers[i];
-    CryptoNote::reserve_proof_entry& proof = proofs[i];
+    CryptoNote::RESERVE_PROOF_ENTRY& proof = proofs[i];
     proof.key_image = kimages[i];
     proof.txid = td.transactionHash;
     proof.index_in_tx = td.outputInTransaction;
@@ -893,7 +893,7 @@ QString WalletGreenWorker::getBalanceProof(quint64& _amount, QString& _message) 
   Crypto::generate_signature(prefix_hash, keys.address.spendPublicKey, keys.spendSecretKey, signature);
 
   // serialize & encode
-  CryptoNote::reserve_proof p;
+  CryptoNote::RESERVE_PROOF p;
   p.proofs.assign(proofs.begin(), proofs.end());
   memcpy(&p.signature, &signature, sizeof(signature));
 

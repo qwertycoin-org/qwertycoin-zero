@@ -34,7 +34,6 @@ QDateTimeEdit {
   selection-color: #000000;
 }
 
-
 QDateTimeEdit::drop-down {
   width: 20;
   border-top-right-radius: 2px;
@@ -50,7 +49,6 @@ QMessageBox QLabel {
 QLineEdit, QDoubleSpinBox, QSpinBox, QComboBox, QDateTimeEdit {
   padding-left: 5px;
 }
-
 
 QComboBox {
   border: 1px solid %borderColorDark%;

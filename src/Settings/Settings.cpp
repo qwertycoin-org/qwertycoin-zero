@@ -76,7 +76,16 @@ Settings& Settings::instance() {
 
 
 Settings::Settings() : m_p2pBindPort(0), m_cmdLineParser(nullptr) {
-  m_defaultNodeList << "node-00.qwertycoin.org:8197" << "node-01.qwertycoin.org:8197" << "node-02.qwertycoin.org:8197" << "node-03.qwertycoin.org:8197" << "node-04.qwertycoin.org:8197" << "node-05.qwertycoin.org:8197" << "explorer.qwertycoin.org:8197" << "loop.qwertycoin.org:8197";
+  m_defaultNodeList << "node-00.qwertycoin.org:8197"
+                      << "node-01.qwertycoin.org:8197"
+                      << "node-02.qwertycoin.org:8197"
+                      << "node-03.qwertycoin.org:8197"
+                      << "node-04.qwertycoin.org:8197"
+                      << "node-05.qwertycoin.org:8197"
+                      << "node-06.qwertycoin.org:8197"
+                      << "node-07.qwertycoin.org:8197"
+                      << "node-08.qwertycoin.org:8197"
+                      << "node-09.qwertycoin.org:8197";
 
   Style* lightStyle = new LightStyle();
   Style* darkStyle = new DarkStyle();
