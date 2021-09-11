@@ -1,0 +1,237 @@
+name: Build check
+
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '*'            # We don't want this to run on release
+  pull_request:
+
+jobs:
+  build-windows:
+    name: Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+
+      - name: Setup MSBuild.exe
+        uses: warrenbuckley/Setup-MSBuild@v1
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.14.0'
+          host: 'windows'
+          target: 'desktop'
+          modules: 'qttools5'
+          install-deps: 'true'
+
+      - name: Build
+        shell: powershell
+        id: build
+        env:
+          GIT_REDIRECT_STDERR: '2>&1'
+        run: |
+          $build_folder = "build"
+          $qwc_ver = git describe --tags --abbrev=0
+          $release_name = "qwertycoin-zero-win64-${qwc_ver}"
+          set CMAKE_PREFIX_PATH="$($qt5_cmake)"
+          $qt5_cmake = "${{ env.Qt5_Dir }}/lib/cmake" -replace '[/]', '\\'
+          mkdir "$build_folder"
+          cd "$build_folder"
+          Start-Process cmake -ArgumentList "-G ""Visual Studio 16 2019"" -A x64",".." -NoNewWindow -Wait
+          Start-Process msbuild -ArgumentList "qwertycoin-zero.sln","/p:Configuration=Release" -NoNewWindow -Wait
+          $build_path = "./$build_folder"
+          echo "::set-output name=build_path::${build_path}"
+          echo "::set-output name=release_name::${release_name}"
+          echo "::set-output name=qwc_ver::${qwc_ver}"
+  
+      - name: Pack
+        shell: powershell
+        id: pack
+        env:
+          VCINSTALLDIR: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\'
+        run: |
+          $build_folder = "${{ steps.build.outputs.build_path }}"
+          $release_name = "${{ steps.build.outputs.release_name }}"
+          $release_folder = "Release"
+          cd "$build_folder"
+          $qwc_ver = "${{ steps.build.outputs.qwc_ver }}"
+          mkdir "$release_folder/$release_name"
+          cd "$release_folder"
+          cp qwertycoin-zero.exe "$release_name/"
+          cp "../../LICENSE" "$release_name/LICENSE.txt"
+          windeployqt --release qwertycoin-zero.exe --dir "$release_name/"
+          Compress-Archive -Path "$release_name/" -DestinationPath "$release_name.zip"
+          $sha256 = (Get-FileHash "$release_name.zip").Hash
+          $asset_path = "./$build_folder/$release_folder/$release_name.zip"
+          echo "::set-output name=sha256::${sha256}"
+          echo "::set-output name=release_name::${release_name}.zip"
+          echo "::set-output name=asset_path::${asset_path}"
+          echo "::set-output name=qwc_ver::${qwc_ver}"
+
+      - name: Create Archive Artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          path: ${{ steps.pack.outputs.asset_path }}
+          name: ${{ steps.pack.outputs.release_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-macos:
+    name: macOS
+    runs-on: macos-latest
+    env:
+      MACOSX_DEPLOYMENT_TARGET: '10.12'	
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@1.0
+        with:
+          xcode-version: '10'
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.12.0'
+          modules: 'qttools5'
+          install-deps: 'true'
+
+      - name: Find Tag
+        id: tagger
+        uses: jimschubert/query-tag-action@v1
+        with:
+          include: 'v*'
+          exclude: '*-rc*'
+          commit-ish: 'HEAD~'
+          skip-unshallow: 'true'
+
+      - name: Build
+        id: build
+        run: |
+          build_folder="build/release"
+          qwc_ver="${{steps.tagger.outputs.tag}}"
+          release_name="qwertycoin-zero-macOS-$qwc_ver"
+          app_name="qwertycoin-zero.app"
+          brew install gcc boost
+          brew link boost --force
+          mkdir -p "$build_folder"
+          cd "$build_folder"
+          cmake -DCMAKE_C_FLAGS="-mmacosx-version-min=10.12" -DCMAKE_CXX_FLAGS="-mmacosx-version-min=10.12" -D CMAKE_BUILD_TYPE=Release ../..
+          make
+          macdeployqt "$app_name"
+          cpack
+          mv *.dmg "$release_name".dmg
+          sha256=$(shasum -a 256 "$release_name".dmg | awk '{ print toupper($1) }')
+          asset_path="./$build_folder/$release_name.dmg"
+          echo "::set-output name=sha256::${sha256}"
+          echo "::set-output name=release_name::${release_name}.zip"
+          echo "::set-output name=asset_path::${asset_path}"
+          echo "::set-output name=qwc_ver::${qwc_ver}"
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          path: ${{ steps.build.outputs.asset_path }}
+          name: ${{ steps.build.outputs.release_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-ubuntu20:
+    name: Ubuntu 20.04
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+
+      - name: Find Tag
+        id: tagger
+        uses: jimschubert/query-tag-action@v1
+        with:
+          include: 'v*'
+          exclude: '*-rc*'
+          commit-ish: 'HEAD~'
+          skip-unshallow: 'true'
+
+      - name: Build
+        id: build
+        run: |
+          sudo apt update -y
+          sudo apt install -y qt5-default qttools5-dev qttools5-dev-tools libboost-all-dev
+          build_folder="build/release"
+          qwc_ver="${{ steps.build.outputs.qwc_ver }}"
+          release_name=qwertycoin-zero-ubuntu-20.04-"$qwc_ver"
+          app_name="qwertycoin-zero"
+          mkdir -p "$build_folder"
+          cd "$build_folder"
+          cmake -D ARCH=default -D CMAKE_BUILD_TYPE=Release -D CMAKE_POSITION_INDEPENDENT_CODE:BOOL=true ../..
+          make
+          tar -czf "$release_name".tar.gz "$app_name"
+          sha256=$(shasum -a 256 "$release_name".tar.gz | awk '{print toupper($1)}')
+          asset_path="./$build_folder/$release_name".tar.gz
+          echo "::set-output name=sha256::${sha256}"
+          echo "::set-output name=release_name::${release_name}.tar.gz"
+          echo "::set-output name=asset_path::${asset_path}"
+          echo "::set-output name=qwc_ver::${qwc_ver}"
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          path: ${{ steps.build.outputs.asset_path }}
+          name: ${{ steps.build.outputs.release_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-ubuntu18:
+    name: Ubuntu 18.04
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+
+      - name: Find Tag
+        id: tagger
+        uses: jimschubert/query-tag-action@v1
+        with:
+          include: 'v*'
+          exclude: '*-rc*'
+          commit-ish: 'HEAD~'
+          skip-unshallow: 'true'
+
+      - name: Build
+        id: build
+        run: |
+          sudo apt-get purge '*boost*'
+          sudo apt update -y
+          sudo apt install -y qt5-default qttools5-dev qttools5-dev-tools libboost-all-dev
+          build_folder="build/release"
+          qwc_ver="${{ steps.build.outputs.qwc_ver }}"
+          release_name=qwertycoin-zero-ubuntu-18.04-"$qwc_ver"
+          app_name="qwertycoin-zero"
+          mkdir -p "$build_folder"
+          cd "$build_folder"
+          cmake -D ARCH=default -D CMAKE_BUILD_TYPE=Release -D CMAKE_POSITION_INDEPENDENT_CODE:BOOL=true ../..
+          make
+          tar -czf "$release_name".tar.gz "$app_name"
+          sha256=$(shasum -a 256 "$release_name".tar.gz | awk '{print toupper($1)}')
+          asset_path="./$build_folder/$release_name".tar.gz
+          echo "::set-output name=sha256::${sha256}"
+          echo "::set-output name=release_name::${release_name}.tar.gz"
+          echo "::set-output name=asset_path::${asset_path}"
+          echo "::set-output name=qwc_ver::${qwc_ver}"
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          path: ${{ steps.build.outputs.asset_path }}
+          name: ${{ steps.build.outputs.release_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
