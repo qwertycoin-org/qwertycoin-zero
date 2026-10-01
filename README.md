@@ -1,3 +1,12 @@
+> [!CAUTION]
+> **ARCHIVED LEGACY WALLET — DO NOT USE WITH QWERTYCOIN V2.**
+> This retired remote-node wallet uses obsolete wallet files, network behavior,
+> and service-node assumptions. Do not import a seed or wallet file, create a
+> wallet, or hold funds with this software. Use the current
+> [desktop GUI](https://github.com/qwertycoin-org/qwertycoin-gui),
+> [Web Wallet](https://wallet.qwertycoin.org/), or
+> [Qwertycoin Core](https://github.com/qwertycoin-org/qwertycoin).
+
 ![image](https://cdn.qwertycoin.org/images/press/other/qwc-github-3.png)
 #### Master Build Status
 [![Build Status](https://travis-ci.org/qwertycoin-org/qwertycoin-zero.svg?branch=master)](https://travis-ci.org/qwertycoin-org/qwertycoin-zero)
